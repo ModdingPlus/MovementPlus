@@ -1,4 +1,4 @@
-package dev.necro.coyotelib.common.movement.midair_jump;
+package dev.necro.coyotelib.api.common.movement.midair_jump;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -28,6 +28,10 @@ public class MidairJumpEvent extends PlayerEvent{
 
         public void setCoyoteTime(int ticks) {
             this.coyoteTime = ticks;
+        }
+
+        public void maximizeCoyoteTime(int ticks) {
+            this.coyoteTime = Math.max(this.coyoteTime, ticks);
         }
     }
 
@@ -83,6 +87,10 @@ public class MidairJumpEvent extends PlayerEvent{
 
         public void setJumps(int count) {
             this.jumps = count;
+        }
+
+        public void maximizeJumps(int count) {
+            this.jumps = Math.max(this.jumps, count);
         }
 
         @Override

@@ -24,7 +24,8 @@ public class MidairJumpPacket extends BasePacket<MidairJumpPacket> {
         NetworkEvent.Context context = ctx.get();
         PlayerEntity player = context.getSender();
         if (player != null){
-            MidAirJumpHandler.playerJumpPacket(player);
+            context.enqueueWork(()->MidAirJumpHandler.playerJumpPacket(player));
         }
+        context.setPacketHandled(true);
     }
 }

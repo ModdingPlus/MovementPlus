@@ -1,7 +1,8 @@
 package dev.necro.coyotelib.common.movement.midair_jump;
 
 import dev.necro.coyotelib.CoyoteLib;
-import dev.necro.coyotelib.client.movement.PlayerMovementInputEvent;
+import dev.necro.coyotelib.api.client.movement.PlayerMovementInputEvent;
+import dev.necro.coyotelib.api.common.movement.midair_jump.MidairJumpEvent;
 import dev.necro.coyotelib.common.network.PacketHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;

@@ -1,4 +1,4 @@
-package dev.necro.coyotelib.client.movement;
+package dev.necro.coyotelib.api.client.movement;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
