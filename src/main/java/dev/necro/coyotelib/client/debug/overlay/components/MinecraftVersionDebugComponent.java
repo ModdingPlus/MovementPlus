@@ -11,10 +11,5 @@ public class MinecraftVersionDebugComponent extends DebugOverlayTextComponent {
     @Override
     public void addInformation(NonNullList<String> list, Minecraft minecraft, IDebugOverlayScreen debugOverlay) {
         list.add(String.format("Minecraft %s (%s/%s)", SharedConstants.getVersion().getName(), minecraft.getVersion(), ClientBrandRetriever.getClientModName()));
-        /*return Lists.newArrayList(
-                ,
-                "P: " + minecraft.particles.getStatistics() + ". T: " + minecraft.world.getCountLoadedEntities(),
-                minecraft.world.getProviderName(),
-                "",*/
     }
 }

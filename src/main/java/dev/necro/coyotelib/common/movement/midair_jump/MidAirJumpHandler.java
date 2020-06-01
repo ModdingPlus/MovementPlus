@@ -110,7 +110,7 @@ public class MidAirJumpHandler {
             MidairJumpEvent.SetMultiJumpCount setMultiJumpCountEvent = new MidairJumpEvent.SetMultiJumpCount(player);
             int jumps = nbt.getInt(MULTIJUMP_JUMPS_NBT_KEY);
 
-            if (jumps < setMultiJumpCountEvent.getJumps()) {
+            if (!MinecraftForge.EVENT_BUS.post(setMultiJumpCountEvent) && jumps < setMultiJumpCountEvent.getJumps()) {
                 MidAirJumpHandler.performJump(player, side);
                 nbt.putInt(MULTIJUMP_JUMPS_NBT_KEY, jumps + 1);
             }

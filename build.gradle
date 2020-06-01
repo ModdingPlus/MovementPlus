@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0.0'
+version = '1.0.1'
 group = 'dev.necro.coyotelib' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'coyotelib'
 
@@ -118,7 +118,7 @@ jar {
         attributes([
             "Specification-Title": "coyotelib",
             "Specification-Vendor": "Necro",
-            "Specification-Version": "1", // We are version 1 of ourselves
+            "Specification-Version": "${version}",
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"Necro",
@@ -142,7 +142,12 @@ task sourcesJar(type: Jar) {
 task apiJar(type: Jar) {
     classifier = "api"
     from sourceSets.api.output
-    from sourceSets.api.allJava
+}
+
+task deobfJar(type: Jar) {
+    classifier = "dev"
+    from sourceSets.api.output
+    from sourceSets.main.output
 }
 
 publishing {
@@ -151,6 +156,7 @@ publishing {
             artifact jar
             artifact sourcesJar
             artifact apiJar
+            artifact deobfJar
         }
     }
     repositories {
