@@ -1,57 +1,225 @@
 package dev.necro.coyotelib.client.debug.overlay;
 
+import com.google.common.base.Strings;
+import com.mojang.datafixers.DataFixUtils;
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
-import dev.necro.coyotelib.client.debug.overlay.components.*;
+import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.overlay.DebugOverlayGui;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
-public class CustomDebugOverlayGui extends DebugOverlayGui {
-
-    public DebugOverlayTextComponent MEMORY = new MemoryDebugComponent();
-    public DebugOverlayTextComponent CPU = new CPUDebugComponent();
-    public DebugOverlayTextComponent DISPLAY = new DisplayDebugComponent();
-    public DebugOverlayTextComponent BLOCK = new BlockDebugComponent();
-    public DebugOverlayTextComponent TILE_ENTITY = new TileEntityDebugComponent();
-    public DebugOverlayTextComponent FLUID = new FluidDebugComponent();
-    public DebugOverlayTextComponent ENTITY = new EntityDebugComponent();
-    public DebugOverlayTextComponent ITEM_STACK = new ItemStackDebugComponent();
-    public DebugOverlayTextComponent SOUNDS = new SoundsDebugComponent();
-    public DebugOverlayTextComponent SERVER_INFO = new ServerInfoDebugComponent();
-    public DebugOverlayTextComponent MINECRAFT_VERSION = new MinecraftVersionDebugComponent();
-    public DebugOverlayTextComponent POSITION = new PositionDebugComponent();
-    public DebugOverlayTextComponent FACING = new FacingDebugComponent();
-    public DebugOverlayTextComponent CLIENT_LIGHT = new ClientLightComponent();
+public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOverlayScreen {
 
     protected Minecraft mc;
+    protected World cachedIntegratedServerWorld = null;
+    protected BlockPos cachedRenderViewBlockPos = null;
+    protected Optional<BlockPos> cachedTargetedBlock;
+    protected Optional<BlockPos> cachedTargetedFluid ;
+    protected Optional<Chunk> cachedChunk;
+    protected Optional<Chunk> cachedServerChunk;
+    protected FontRenderer fontRenderer;
 
     public CustomDebugOverlayGui(Minecraft mc) {
         super(mc);
         this.mc = mc;
+        this.fontRenderer = mc.fontRenderer;
+    }
+
+    @Override
+    public void render() {
+        ChunkPos chunkPos = new ChunkPos(this.getRenderViewBlockPos());
+        if (!Objects.equals(this.chunkPos, chunkPos)) {
+            this.chunkPos = chunkPos;
+            this.resetChunk();
+        }
+        super.render();
+        this.clearCachedFields();
+    }
+
+    @Override
+    protected void renderDebugInfoLeft() {
+        List<String> list = this.getDebugInfoLeft();
+        int line_height = 9;
+
+        for(int line = 0; line < list.size(); ++line) {
+            String s = list.get(line);
+            if (!Strings.isNullOrEmpty(s)) {
+                int width = this.fontRenderer.getStringWidth(s);
+                int y = 2 + line_height * line;
+                fill(1, y - 1, 2 + width + 1, y + line_height - 1, -1873784752);
+                this.fontRenderer.drawString(s, 2.0F, (float)y, 14737632);
+            }
+        }
     }
 
     @Override
     protected List<String> getDebugInfoLeft() {
-        ArrayList<String> ret = new ArrayList<>();
-        combineDebugOverlayComponents(ret, MINECRAFT_VERSION, SERVER_INFO, POSITION, FACING, CLIENT_LIGHT);
+        NonNullList<String> ret = NonNullList.create();
+        combineDebugOverlayComponents(ret,
+                DebugOverlayTextComponents.MINECRAFT_VERSION,
+                DebugOverlayTextComponents.PERFORMANCE,
+                DebugOverlayTextComponents.SERVER_INFO,
+                DebugOverlayTextComponents.RENDERER_RENDERS,
+                DebugOverlayTextComponents.RENDERER_ENTITIES,
+                DebugOverlayTextComponents.PARTICLES_ENTITIES_COUNT,
+                DebugOverlayTextComponents.CHUNK_STATS,
+                DebugOverlayTextComponents.DIMENSION,
+                DebugOverlayTextComponents.OPTIONAL_SPACER,
+                DebugOverlayTextComponents.POSITION,
+                DebugOverlayTextComponents.FACING,
+                DebugOverlayTextComponents.LIGHT,
+                DebugOverlayTextComponents.HEIGHTMAP,
+                DebugOverlayTextComponents.BIOME,
+                DebugOverlayTextComponents.LOCAL_DIFFICULTY,
+                DebugOverlayTextComponents.LOOKING_AT_BLOCK,
+                DebugOverlayTextComponents.LOOKING_AT_FLUID,
+                DebugOverlayTextComponents.SHADER,
+                DebugOverlayTextComponents.SOUNDS);
         return ret;
     }
 
     @Override
     protected List<String> getDebugInfoRight(){
-        ArrayList<String> ret = new ArrayList<>();
-        combineDebugOverlayComponents(ret, MEMORY, CPU, DISPLAY, BLOCK, TILE_ENTITY, FLUID, ENTITY, ITEM_STACK);
+        NonNullList<String> ret = NonNullList.create();
+        combineDebugOverlayComponents(ret,
+                DebugOverlayTextComponents.MEMORY,
+                DebugOverlayTextComponents.OPTIONAL_SPACER,
+                DebugOverlayTextComponents.CPU,
+                DebugOverlayTextComponents.OPTIONAL_SPACER,
+                DebugOverlayTextComponents.DISPLAY,
+                DebugOverlayTextComponents.OPTIONAL_SPACER,
+                DebugOverlayTextComponents.BLOCK,
+                DebugOverlayTextComponents.OPTIONAL_SPACER,
+                DebugOverlayTextComponents.TILE_ENTITY,
+                DebugOverlayTextComponents.OPTIONAL_SPACER,
+                DebugOverlayTextComponents.FLUID,
+                DebugOverlayTextComponents.OPTIONAL_SPACER,
+                DebugOverlayTextComponents.ENTITY,
+                DebugOverlayTextComponents.OPTIONAL_SPACER,
+                DebugOverlayTextComponents.ITEM_STACK);
         return ret;
     }
 
-    private void combineDebugOverlayComponents(List<String> list, DebugOverlayTextComponent...components){
+    protected void combineDebugOverlayComponents(NonNullList<String> list, DebugOverlayTextComponent...components){
         for(DebugOverlayTextComponent component: components){
-            component.addInformation(list, this.mc, this.rayTraceBlock, this.rayTraceFluid);
-            if(!list.isEmpty() && !list.get(list.size()-1).isEmpty()){
-                list.add("");
-            }
+            component.addInformation(list, this.mc, this);
         }
+    }
+
+    @SuppressWarnings("OptionalAssignedToNull")
+    protected void clearCachedFields(){
+        this.cachedIntegratedServerWorld=null;
+        this.cachedRenderViewBlockPos=null;
+        this.cachedTargetedBlock=null;
+        this.cachedTargetedFluid=null;
+        this.cachedChunk=null;
+        this.cachedServerChunk=null;
+    }
+
+    @Override
+    public Entity getRenderViewEntity(){
+        return this.mc.renderViewEntity;
+    }
+
+    @Override
+    public BlockPos getRenderViewBlockPos(){
+        if(this.cachedRenderViewBlockPos == null) {
+            this.cachedRenderViewBlockPos = this.getRenderViewEntity().getPosition();
+        }
+        return this.cachedRenderViewBlockPos;
+    }
+
+    @Override
+    public World getWorld() {
+        return this.mc.world;
+    }
+
+    @Override
+    public World getIntegratedServerWorld() {
+        if(this.cachedIntegratedServerWorld == null) {
+            this.cachedIntegratedServerWorld = DataFixUtils.orElse(Optional.ofNullable(this.mc.getIntegratedServer()).map((integratedServer) -> {
+                return integratedServer.getWorld(this.mc.world.dimension.getType());
+            }), this.mc.world);
+        }
+        return this.cachedIntegratedServerWorld;
+    }
+
+    @Override
+    public Minecraft getMinecraft(){
+        return this.mc;
+    }
+
+    @Override
+    public RayTraceResult getTargetedBlockRayTrace(){
+        return this.rayTraceBlock;
+    }
+
+    @Override
+    public RayTraceResult getTargetedFluidRayTrace(){
+        return this.rayTraceFluid;
+    }
+
+    @Override
+    @SuppressWarnings("OptionalAssignedToNull")
+    public Optional<BlockPos> getTargetedBlock() {
+        if(this.cachedTargetedBlock == null){
+            RayTraceResult rayTraceResult = this.getTargetedBlockRayTrace();
+            if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
+                this.cachedTargetedBlock = Optional.of(((BlockRayTraceResult)rayTraceResult).getPos());
+            else
+                this.cachedTargetedBlock = Optional.empty();
+        }
+        return this.cachedTargetedBlock;
+    }
+
+    @Override
+    @SuppressWarnings("OptionalAssignedToNull")
+    public Optional<BlockPos> getTargetedFluid() {
+        if(this.cachedTargetedFluid == null){
+            RayTraceResult rayTraceResult = this.getTargetedFluidRayTrace();
+            if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
+                this.cachedTargetedBlock = Optional.of(((BlockRayTraceResult)rayTraceResult).getPos());
+            else
+                this.cachedTargetedBlock = Optional.empty();
+        }
+        return this.cachedTargetedBlock;
+    }
+
+    @Override
+    @SuppressWarnings("OptionalAssignedToNull")
+    public Optional<Chunk> getChunkIfAvailable() {
+        if(this.cachedChunk == null){
+            Chunk chunk = this.getChunk();
+            if(chunk!=null)
+                this.cachedChunk = Optional.of(chunk);
+            else
+                this.cachedChunk = Optional.empty();
+        }
+        return this.cachedChunk;
+    }
+
+    @Override
+    @SuppressWarnings("OptionalAssignedToNull")
+    public Optional<Chunk> getServerChunkIfAvailable() {
+        if(this.cachedServerChunk == null){
+            Chunk serverChunk = this.getServerChunk();
+            if(serverChunk!=null)
+                this.cachedServerChunk = Optional.of(serverChunk);
+            else
+                this.cachedServerChunk = Optional.empty();
+        }
+        return this.cachedServerChunk;
     }
 }

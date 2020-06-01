@@ -90,7 +90,7 @@ public class MidAirJumpHandler {
             if (player.getMotion().y < 0 && !nbt.getBoolean(COYOTETIME_JUMPED_KEY)){
                 int timeOffGround = nbt.getInt(COYOTETIME_TIME_OFF_GROUND_KEY);
 
-                MidairJumpEvent.SetCoyoteTime event = new MidairJumpEvent.SetCoyoteTime(player, 3);
+                MidairJumpEvent.SetCoyoteTime event = new MidairJumpEvent.SetCoyoteTime(player, 0);
                 MinecraftForge.EVENT_BUS.post(event);
                 if (timeOffGround <= event.getCoyoteTime()) {
 

@@ -1,24 +1,24 @@
 package dev.necro.coyotelib.client.debug.overlay.components;
 
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
+import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.Entity;
 import net.minecraft.state.IProperty;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 
-import java.util.List;
 import java.util.Map;
 
-public class EntityDebugComponent implements DebugOverlayTextComponent {
+public class EntityDebugComponent extends DebugOverlayTextComponent {
 
     @Override
-    public void addInformation(List<String> list,
+    public void addInformation(NonNullList<String> list,
                                Minecraft minecraft,
-                               RayTraceResult targetedBlock,
-                               RayTraceResult targetedFluid) {
-        net.minecraft.entity.Entity entity = minecraft.pointedEntity;
+                               IDebugOverlayScreen debugOverlay) {
+        Entity entity = minecraft.pointedEntity;
         if (entity != null) {
             list.add(TextFormatting.UNDERLINE + "Targeted Entity");
             list.add(entity.getType().getRegistryName().toString());

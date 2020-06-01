@@ -1,21 +1,19 @@
 package dev.necro.coyotelib.client.debug.overlay.components;
 
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
+import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 
-import java.util.List;
-
-public class ItemStackDebugComponent implements DebugOverlayTextComponent {
+public class ItemStackDebugComponent extends DebugOverlayTextComponent {
 
     @Override
-    public void addInformation(List<String> list,
+    public void addInformation(NonNullList<String> list,
                                Minecraft minecraft,
-                               RayTraceResult targetedBlock,
-                               RayTraceResult targetedFluid) {
+                               IDebugOverlayScreen debugOverlay) {
         PlayerEntity player = minecraft.player;
 
         net.minecraft.item.ItemStack stack = player.getHeldItemMainhand();

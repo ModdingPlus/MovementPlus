@@ -5,9 +5,9 @@ import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.NonNullList;
 
-public class SoundsDebugComponent extends DebugOverlayTextComponent {
+public class ParticlesEntitiesCountDebugComponent extends DebugOverlayTextComponent {
     @Override
     public void addInformation(NonNullList<String> list, Minecraft minecraft, IDebugOverlayScreen debugOverlay) {
-        list.add(minecraft.getSoundHandler().getDebugString());
+        list.add(String.format("P: %s. T: %d", minecraft.particles.getStatistics(), minecraft.world.getCountLoadedEntities()));
     }
 }

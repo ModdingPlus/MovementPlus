@@ -1,22 +1,22 @@
 package dev.necro.coyotelib.client.debug.overlay.components;
 
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
+import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.NonNullList;
 
 import java.util.Arrays;
-import java.util.List;
 
-public class MemoryDebugComponent implements DebugOverlayTextComponent {
+public class MemoryDebugComponent extends DebugOverlayTextComponent {
 
     @Override
-    public void addInformation(List<String> list,
+    public void addInformation(NonNullList<String> list,
                                Minecraft minecraft,
-                               RayTraceResult targetedBlock,
-                               RayTraceResult targetedFluid) {
-        long maxMemory = Runtime.getRuntime().maxMemory();
-        long totalMemory = Runtime.getRuntime().totalMemory();
-        long freeMemory = Runtime.getRuntime().freeMemory();
+                               IDebugOverlayScreen debugOverlay) {
+        Runtime runtime = Runtime.getRuntime();
+        long maxMemory = runtime.maxMemory();
+        long totalMemory = runtime.totalMemory();
+        long freeMemory = runtime.freeMemory();
         long usedMemory = totalMemory - freeMemory;
         list.addAll(Arrays.asList(
                 String.format("Java: %s %dbit",

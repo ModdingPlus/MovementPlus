@@ -1,16 +1,15 @@
 package dev.necro.coyotelib.client.debug.overlay.components;
 
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
+import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.NonNullList;
 
-import java.util.List;
-
-public class ServerInfoDebugComponent implements DebugOverlayTextComponent {
+public class ServerInfoDebugComponent extends DebugOverlayTextComponent {
     @Override
-    public void addInformation(List<String> list, Minecraft minecraft, RayTraceResult targetedBlock, RayTraceResult targetedFluid) {
+    public void addInformation(NonNullList<String> list, Minecraft minecraft, IDebugOverlayScreen debugOverlay) {
         IntegratedServer integratedserver = minecraft.getIntegratedServer();
         NetworkManager networkmanager = minecraft.getConnection().getNetworkManager();
         float f = networkmanager.getPacketsSent();
@@ -23,8 +22,6 @@ public class ServerInfoDebugComponent implements DebugOverlayTextComponent {
         }
 
         /*BlockPos blockpos = new BlockPos(minecraft.getRenderViewEntity());
-            Entity entity = this.mc.getRenderViewEntity();
-            Direction direction = entity.getHorizontalFacing();
 
             ChunkPos chunkpos = new ChunkPos(blockpos);
             if (!Objects.equals(this.chunkPos, chunkpos)) {
@@ -33,14 +30,7 @@ public class ServerInfoDebugComponent implements DebugOverlayTextComponent {
             }
 
             World world = this.getWorld();
-            LongSet longset = (LongSet)(world instanceof ServerWorld ? ((ServerWorld)world).getForcedChunks() : LongSets.EMPTY_SET);
-            List<String> list = Lists.newArrayList("Minecraft " + SharedConstants.getVersion().getName() + " (" + this.mc.getVersion() + "/" + ClientBrandRetriever.getClientModName() + ("release".equalsIgnoreCase(this.mc.getVersionType()) ? "" : "/" + this.mc.getVersionType()) + ")", this.mc.debug, s, this.mc.worldRenderer.getDebugInfoRenders(), this.mc.worldRenderer.getDebugInfoEntities(), "P: " + this.mc.particles.getStatistics() + ". T: " + this.mc.world.getCountLoadedEntities(), this.mc.world.getProviderName());
-            String s2 = this.getServerChunkStats();
-            if (s2 != null) {
-                list.add(s2);
-            }
 
-            list.add(DimensionType.getKey(this.mc.world.dimension.getType()).toString() + " FC: " + Integer.toString(longset.size()));
             list.add("");
 
                 if (this.mc.world.isBlockLoaded(blockpos)) {
@@ -75,39 +65,13 @@ public class ServerInfoDebugComponent implements DebugOverlayTextComponent {
                         }
 
                         list.add(stringbuilder.toString());
-                        if (blockpos.getY() >= 0 && blockpos.getY() < 256) {
-                            list.add("Biome: " + Registry.BIOME.getKey(this.mc.world.getBiome(blockpos)));
-                            long l = 0L;
-                            float f2 = 0.0F;
-                            if (chunk1 != null) {
-                                f2 = world.getCurrentMoonPhaseFactor();
-                                l = chunk1.getInhabitedTime();
-                            }
-
-                            DifficultyInstance difficultyinstance = new DifficultyInstance(world.getDifficulty(), world.getDayTime(), l, f2);
-                            list.add(String.format(Locale.ROOT, "Local Difficulty: %.2f // %.2f (Day %d)", difficultyinstance.getAdditionalDifficulty(), difficultyinstance.getClampedAdditionalDifficulty(), this.mc.world.getDayTime() / 24000L));
-                        }
                     }
                 } else {
                     list.add("Outside of world...");
                 }
 
-            ShaderGroup shadergroup = this.mc.gameRenderer.getShaderGroup();
-            if (shadergroup != null) {
-                list.add("Shader: " + shadergroup.getShaderGroupName());
-            }
 
-            if (this.rayTraceBlock.getType() == RayTraceResult.Type.BLOCK) {
-                BlockPos blockpos1 = ((BlockRayTraceResult)this.rayTraceBlock).getPos();
-                list.add(String.format("Looking at block: %d %d %d", blockpos1.getX(), blockpos1.getY(), blockpos1.getZ()));
-            }
 
-            if (this.rayTraceFluid.getType() == RayTraceResult.Type.BLOCK) {
-                BlockPos blockpos2 = ((BlockRayTraceResult)this.rayTraceFluid).getPos();
-                list.add(String.format("Looking at liquid: %d %d %d", blockpos2.getX(), blockpos2.getY(), blockpos2.getZ()));
-            }
-
-            list.add(this.mc.getSoundHandler().getDebugString());
             return list;
         }*/
     }

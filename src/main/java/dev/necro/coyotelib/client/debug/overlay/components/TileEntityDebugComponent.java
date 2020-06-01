@@ -1,28 +1,29 @@
 package dev.necro.coyotelib.client.debug.overlay.components;
 
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
+import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Optional;
 
-public class TileEntityDebugComponent implements DebugOverlayTextComponent {
+public class TileEntityDebugComponent extends DebugOverlayTextComponent {
 
     @Override
-    public void addInformation(List<String> list,
+    public void addInformation(NonNullList<String> list,
                                Minecraft minecraft,
-                               RayTraceResult targetedBlock,
-                               RayTraceResult targetedFluid) {
-        if (targetedBlock.getType() == RayTraceResult.Type.BLOCK) {
-            BlockPos blockpos = ((BlockRayTraceResult)targetedBlock).getPos();
-            net.minecraft.tileentity.TileEntity tileEntity = minecraft.world.getTileEntity(blockpos);
+                               IDebugOverlayScreen debugOverlay) {
+        Optional<BlockPos> targetedBlock = debugOverlay.getTargetedBlock();
+        if (targetedBlock.isPresent()) {
+            BlockPos blockPos = targetedBlock.get();
+            TileEntity tileEntity = minecraft.world.getTileEntity(blockPos);
 
             if(tileEntity!=null) {
                 list.addAll(Arrays.asList(

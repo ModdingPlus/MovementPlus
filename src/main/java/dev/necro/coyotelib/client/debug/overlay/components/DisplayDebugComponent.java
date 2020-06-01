@@ -2,21 +2,20 @@ package dev.necro.coyotelib.client.debug.overlay.components;
 
 import com.mojang.blaze3d.platform.PlatformDescriptors;
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
+import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.NonNullList;
 
 import java.util.Arrays;
-import java.util.List;
 
-public class DisplayDebugComponent implements DebugOverlayTextComponent {
+public class DisplayDebugComponent extends DebugOverlayTextComponent {
 
     @Override
-    public void addInformation(List<String> list,
+    public void addInformation(NonNullList<String> list,
                                Minecraft minecraft,
-                               RayTraceResult targetedBlock,
-                               RayTraceResult targetedFluidt) {
+                               IDebugOverlayScreen debugOverlay) {
         list.addAll(Arrays.asList(
-                String.format("Display: %dx%d (%s)", Minecraft.getInstance().getMainWindow().getFramebufferWidth(), Minecraft.getInstance().getMainWindow().getFramebufferHeight(), PlatformDescriptors.getGlVendor()),
+                String.format("Display: %dx%d (%s)", minecraft.getMainWindow().getFramebufferWidth(), minecraft.getMainWindow().getFramebufferHeight(), PlatformDescriptors.getGlVendor()),
                 PlatformDescriptors.getGlRenderer(),
                 PlatformDescriptors.getGlVersion()
         ));

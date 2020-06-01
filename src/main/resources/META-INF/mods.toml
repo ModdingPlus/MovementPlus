@@ -7,25 +7,21 @@
 modLoader="javafml"
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
 loaderVersion="[31,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
-# A URL to refer people to when problems occur with this mod
-issueTrackerURL="http://my.issue.tracker/" #optional
+ssueTrackerURL="https://github.com/Necr0/Coyote-Lib/issues"
+
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]]
 modId="coyotelib"
 version="${file.jarVersion}"
-displayName="Convenient Foundation"
+displayName="CoyoteLib"
 # updateJSONURL="http://myurl.me/"
-# displayURL="http://example.com/"
-# A file name (in the root of the mod JAR) containing a logo for display
-# logoFile="examplemod.png"
-# credits="Thanks for this example mod goes to Java"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/coyotelib"
+logoFile="coyotelib.png"
+credits="Thanks to the Forge Team, the Forge Discord Channel, and the MMD Discord Channel."
+
 authors="Necro"
 description='''
-This is a long form description of the mod. You can write whatever you want here
-
-Have some lorem ipsum.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis lacinia magna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed sagittis luctus odio eu tempus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque volutpat ligula eget lacus auctor sagittis. In hac habitasse platea dictumst. Nunc gravida elit vitae sem vehicula efficitur. Donec mattis ipsum et arcu lobortis, eleifend sagittis sem rutrum. Cras pharetra quam eget posuere fermentum. Sed id tincidunt justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+A library mod providing things like a double jump and coyote time API that for mods to tap into. It also provides a customizable debug overlay and custom gamerules.
 '''
 
 [[dependencies.coyotelib]] #optional

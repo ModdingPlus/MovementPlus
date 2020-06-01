@@ -1,19 +1,19 @@
 package dev.necro.coyotelib.client.debug.overlay.components;
 
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
+import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
 
-import java.util.List;
 import java.util.Locale;
 
-public class FacingDebugComponent implements DebugOverlayTextComponent {
+public class FacingDebugComponent extends DebugOverlayTextComponent {
     @Override
-    public void addInformation(List<String> list, Minecraft minecraft, RayTraceResult targetedBlock, RayTraceResult targetedFluid) {
-        Entity entity = minecraft.getRenderViewEntity();
+    public void addInformation(NonNullList<String> list, Minecraft minecraft, IDebugOverlayScreen debugOverlay) {
+        Entity entity = debugOverlay.getRenderViewEntity();
         Direction direction = entity.getHorizontalFacing();
         String s1;
         switch(direction) {

@@ -1,29 +1,29 @@
 package dev.necro.coyotelib.client.debug.overlay.components;
 
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
+import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.state.IProperty;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-public class FluidDebugComponent implements DebugOverlayTextComponent {
+public class FluidDebugComponent extends DebugOverlayTextComponent {
 
     @Override
-    public void addInformation(List<String> list,
+    public void addInformation(NonNullList<String> list,
                                Minecraft minecraft,
-                               RayTraceResult targetedBlock,
-                               RayTraceResult targetedFluid) {
-        if (targetedFluid.getType() == RayTraceResult.Type.BLOCK) {
-            BlockPos blockpos = ((BlockRayTraceResult)targetedFluid).getPos();
-            IFluidState fluidState = minecraft.world.getFluidState(blockpos);
+                               IDebugOverlayScreen debugOverlay) {
+        Optional<BlockPos> targetedFluid = debugOverlay.getTargetedFluid();
+        if (targetedFluid.isPresent()) {
+            BlockPos blockPos = targetedFluid.get();
+            IFluidState fluidState = minecraft.world.getFluidState(blockPos);
 
             list.addAll(Arrays.asList(
                     TextFormatting.UNDERLINE + "Targeted Fluid",
