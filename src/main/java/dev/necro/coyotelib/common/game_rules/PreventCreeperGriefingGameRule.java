@@ -1,7 +1,6 @@
-package dev.necro.coyotelib.common.gamerule;
+package dev.necro.coyotelib.common.game_rules;
 
 import dev.necro.coyotelib.CoyoteLib;
-import dev.necro.coyotelib.api.common.movement.midair_jump.RegisterGameRuleEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraftforge.event.entity.EntityMobGriefingEvent;

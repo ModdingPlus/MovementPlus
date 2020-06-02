@@ -23,6 +23,6 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.x.x'
 
     [...]
-    compile fg.deobf('dev.necro.coyotelib:CoyoteLib:1.0.1:dev')
+    compile fg.deobf('dev.necro.coyotelib:CoyoteLib:1.1.0:dev')
 }
 ```

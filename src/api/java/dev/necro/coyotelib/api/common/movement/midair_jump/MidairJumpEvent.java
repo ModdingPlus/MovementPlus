@@ -1,10 +1,13 @@
 package dev.necro.coyotelib.api.common.movement.midair_jump;
 
+import jdk.internal.jline.internal.Nullable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 
-public class MidairJumpEvent extends PlayerEvent{
+import java.util.function.Consumer;
+
+public abstract class MidairJumpEvent extends PlayerEvent{
     public MidairJumpEvent(PlayerEntity player) {
         super(player);
     }
@@ -35,32 +38,73 @@ public class MidairJumpEvent extends PlayerEvent{
         }
     }
 
-    @Cancelable
-    public static class CoyoteTimeJump extends MidairJumpEvent {
+    public static abstract class CoyoteTimeJump extends MidairJumpEvent {
         public CoyoteTimeJump(PlayerEntity player) {
             super(player);
         }
 
-        @Override
-        public boolean isCancelable() {
-            return true;
+        @Cancelable
+        public static class Pre extends SpecialJump {
+            private boolean jump;
+
+            public Pre(PlayerEntity player) {
+                super(player);
+            }
+
+            @Override
+            public boolean isCancelable() {
+                return true;
+            }
+        }
+
+        public static class Post extends SpecialJump {
+            private boolean _isHandled;
+
+            public Post(PlayerEntity player) {
+                super(player);
+            }
+
+            /**
+             * Whether or not the even has already been handled cosmetically,
+             * meaning primarily applying cosmetic effects like particles and sounds
+             * @return wether the event has been handled
+             */
+            public boolean isHandled(){ return this._isHandled; }
+
+            /**
+             * Indicate that the event has been handled cosmetically
+             */
+            public void setHandled(){ this._isHandled = true; }
         }
     }
 
-    @Cancelable
     public static class SpecialJump extends MidairJumpEvent {
-        private boolean jump;
+        private boolean _jump;
+        private Consumer<PlayerEntity> _callback;
 
         public SpecialJump(PlayerEntity player) {
             super(player);
         }
 
         public void setJump(boolean jump){
-            this.jump = jump;
+            this._jump = jump;
         }
 
         public boolean canJump(){
-            return this.jump;
+            return this._jump;
+        }
+
+        public void setCallback(Consumer<PlayerEntity> callback){
+            this._callback = callback;
+        }
+
+        public boolean hasCallback(){
+            return this._callback != null;
+        }
+
+        @Nullable
+        public Consumer<PlayerEntity> getCallback(){
+            return this._callback;
         }
 
         @Override
@@ -99,15 +143,41 @@ public class MidairJumpEvent extends PlayerEvent{
         }
     }
 
-    @Cancelable
-    public static class MultiJump extends MidairJumpEvent {
+    public static abstract class MultiJump extends MidairJumpEvent {
         public MultiJump(PlayerEntity player) {
             super(player);
         }
 
-        @Override
-        public boolean isCancelable() {
-            return true;
+        @Cancelable
+        public static class Pre extends MultiJump {
+            public Pre(PlayerEntity player) {
+                super(player);
+            }
+
+            @Override
+            public boolean isCancelable() {
+                return true;
+            }
+        }
+
+        public static class Post extends MultiJump {
+            private boolean _isHandled;
+
+            public Post(PlayerEntity player) {
+                super(player);
+            }
+
+            /**
+             * Wether or not the even has already been handled cosmetically,
+             * meaning primarily applying cosmetic effects like particles and sounds
+             * @return wether the event has been handled
+             */
+            public boolean isHandled(){ return this._isHandled; }
+
+            /**
+             * Indicate that the event has been handled cosmetically
+             */
+            public void setHandled(){ this._isHandled = true; }
         }
     }
 }

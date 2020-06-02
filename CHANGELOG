@@ -1,0 +1,7 @@
+Features:
+- Split `MidairJumpEvent.CoyoteTimeJump` into `MidairJumpEvent.MultiJump.CoyoteTimeJump`(cancelable) and `MidairJumpEvent.MultiJump.CoyoteTimeJump`(cosmetic effects, etc)
+- Split `MidairJumpEvent.MultiJump` into `MidairJumpEvent.MultiJump.Pre`(cancelable) and `MidairJumpEvent.MultiJump.Post`(cosmetic effects, etc)
+- Added a callback to `MidairJumpEvent.SpecialJump` that can be used for things such as power consumption, cosmetic effects, etc
+Bug Fixes:
+- Fixed `MidairJumpEvent.MultiJump` not being fired
+- Fixed crash on server caused by non-existing DebugOverlayTextComponent registry on server side

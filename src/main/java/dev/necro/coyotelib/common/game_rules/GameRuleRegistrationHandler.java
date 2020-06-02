@@ -1,11 +1,10 @@
-package dev.necro.coyotelib.common.gamerule;
+package dev.necro.coyotelib.common.game_rules;
 
 import com.mojang.brigadier.CommandDispatcher;
 import dev.necro.coyotelib.CoyoteLib;
-import dev.necro.coyotelib.api.common.movement.midair_jump.RegisterGameRuleEvent;
+import dev.necro.coyotelib.api.common.game_rules.RegisterGameRuleEvent;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.impl.GameRuleCommand;
-import net.minecraft.world.GameRules;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

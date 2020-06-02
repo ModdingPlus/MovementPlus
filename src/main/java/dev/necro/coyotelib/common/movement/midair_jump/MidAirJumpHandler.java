@@ -94,8 +94,9 @@ public class MidAirJumpHandler {
                 MinecraftForge.EVENT_BUS.post(event);
                 if (timeOffGround <= event.getCoyoteTime()) {
 
-                    if(!MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.CoyoteTimeJump(player))){
+                    if(!MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.CoyoteTimeJump.Pre(player))){
                         performJump(player, side);
+                        MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.CoyoteTimeJump.Post(player));
                         return;
                     }
                 }
@@ -104,6 +105,8 @@ public class MidAirJumpHandler {
             MidairJumpEvent.SpecialJump specialJumpEvent = new MidairJumpEvent.SpecialJump(player);
             if (!MinecraftForge.EVENT_BUS.post(specialJumpEvent) && specialJumpEvent.canJump()){
                 MidAirJumpHandler.performJump(player, side);
+                if(specialJumpEvent.hasCallback())
+                    specialJumpEvent.getCallback().accept(player);
                 return;
             }
 
@@ -111,8 +114,11 @@ public class MidAirJumpHandler {
             int jumps = nbt.getInt(MULTIJUMP_JUMPS_NBT_KEY);
 
             if (!MinecraftForge.EVENT_BUS.post(setMultiJumpCountEvent) && jumps < setMultiJumpCountEvent.getJumps()) {
-                MidAirJumpHandler.performJump(player, side);
-                nbt.putInt(MULTIJUMP_JUMPS_NBT_KEY, jumps + 1);
+                if (!MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.MultiJump.Pre(player))){
+                    MidAirJumpHandler.performJump(player, side);
+                    nbt.putInt(MULTIJUMP_JUMPS_NBT_KEY, jumps + 1);
+                    MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.MultiJump.Post(player));
+                }
             }
         }
     }

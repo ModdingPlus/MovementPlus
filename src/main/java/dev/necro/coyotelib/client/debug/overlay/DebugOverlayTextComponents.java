@@ -48,16 +48,6 @@ public class DebugOverlayTextComponents {
     public static final DebugOverlayTextComponent OPTIONAL_SPACER = null;
 
     @SubscribeEvent
-    public static void createRegistry(RegistryEvent.NewRegistry event) {
-        DebugOverlayTextComponent.REGISTRY = new RegistryBuilder<DebugOverlayTextComponent>()
-                .setType(DebugOverlayTextComponent.class)
-                .setName(new ResourceLocation(CoyoteLib.MODID, "debug_components"))
-                .disableSaving()
-                .disableSync()
-                .create();
-    }
-
-    @SubscribeEvent
     public static void registerComponents(RegistryEvent.Register<DebugOverlayTextComponent> event){
         IForgeRegistry<DebugOverlayTextComponent> registry = event.getRegistry();
         registry.register(new MemoryDebugComponent().setRegistryName("memory"));
