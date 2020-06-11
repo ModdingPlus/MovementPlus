@@ -4,11 +4,13 @@ import com.google.common.base.Strings;
 import com.mojang.datafixers.DataFixUtils;
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
 import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
+import dev.necro.coyotelib.client.config.ClientConfiguration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.overlay.DebugOverlayGui;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.ChunkPos;
@@ -16,10 +18,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOverlayScreen {
 
     protected Minecraft mc;
@@ -65,50 +69,30 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
     }
 
     @Override
+    @Nonnull
     protected List<String> getDebugInfoLeft() {
         NonNullList<String> ret = NonNullList.create();
-        combineDebugOverlayComponents(ret,
-                DebugOverlayTextComponents.MINECRAFT_VERSION,
-                DebugOverlayTextComponents.PERFORMANCE,
-                DebugOverlayTextComponents.SERVER_INFO,
-                DebugOverlayTextComponents.RENDERER_RENDERS,
-                DebugOverlayTextComponents.RENDERER_ENTITIES,
-                DebugOverlayTextComponents.PARTICLES_ENTITIES_COUNT,
-                DebugOverlayTextComponents.CHUNK_STATS,
-                DebugOverlayTextComponents.DIMENSION,
-                DebugOverlayTextComponents.OPTIONAL_SPACER,
-                DebugOverlayTextComponents.POSITION,
-                DebugOverlayTextComponents.FACING,
-                DebugOverlayTextComponents.LIGHT,
-                DebugOverlayTextComponents.HEIGHTMAP,
-                DebugOverlayTextComponents.BIOME,
-                DebugOverlayTextComponents.LOCAL_DIFFICULTY,
-                DebugOverlayTextComponents.LOOKING_AT_BLOCK,
-                DebugOverlayTextComponents.LOOKING_AT_FLUID,
-                DebugOverlayTextComponents.SHADER,
-                DebugOverlayTextComponents.SOUNDS);
+        combineDebugOverlayComponents(
+                ret,
+                ClientConfiguration.CONFIGURATION.debugoverlay_left.get()
+                        .stream()
+                        .map(s -> DebugOverlayTextComponentsRegistry.INSTANCE.getValue(new ResourceLocation(s)))
+                        .toArray(DebugOverlayTextComponent[]::new)
+        );
         return ret;
     }
 
     @Override
+    @Nonnull
     protected List<String> getDebugInfoRight(){
         NonNullList<String> ret = NonNullList.create();
-        combineDebugOverlayComponents(ret,
-                DebugOverlayTextComponents.MEMORY,
-                DebugOverlayTextComponents.OPTIONAL_SPACER,
-                DebugOverlayTextComponents.CPU,
-                DebugOverlayTextComponents.OPTIONAL_SPACER,
-                DebugOverlayTextComponents.DISPLAY,
-                DebugOverlayTextComponents.OPTIONAL_SPACER,
-                DebugOverlayTextComponents.BLOCK,
-                DebugOverlayTextComponents.OPTIONAL_SPACER,
-                DebugOverlayTextComponents.TILE_ENTITY,
-                DebugOverlayTextComponents.OPTIONAL_SPACER,
-                DebugOverlayTextComponents.FLUID,
-                DebugOverlayTextComponents.OPTIONAL_SPACER,
-                DebugOverlayTextComponents.ENTITY,
-                DebugOverlayTextComponents.OPTIONAL_SPACER,
-                DebugOverlayTextComponents.ITEM_STACK);
+        combineDebugOverlayComponents(
+                ret,
+                ClientConfiguration.CONFIGURATION.debugoverlay_right.get()
+                        .stream()
+                        .map(s -> DebugOverlayTextComponentsRegistry.INSTANCE.getValue(new ResourceLocation(s)))
+                        .toArray(DebugOverlayTextComponent[]::new)
+        );
         return ret;
     }
 
@@ -147,11 +131,11 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
     }
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     public World getIntegratedServerWorld() {
         if(this.cachedIntegratedServerWorld == null) {
-            this.cachedIntegratedServerWorld = DataFixUtils.orElse(Optional.ofNullable(this.mc.getIntegratedServer()).map((integratedServer) -> {
-                return integratedServer.getWorld(this.mc.world.dimension.getType());
-            }), this.mc.world);
+            this.cachedIntegratedServerWorld = DataFixUtils.orElse(Optional.ofNullable(this.mc.getIntegratedServer())
+                    .map((integratedServer) -> integratedServer.getWorld(this.mc.world.dimension.getType())), this.mc.world);
         }
         return this.cachedIntegratedServerWorld;
     }
@@ -198,7 +182,7 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
     }
 
     @Override
-    @SuppressWarnings("OptionalAssignedToNull")
+    @SuppressWarnings({"OptionalAssignedToNull", "ConstantConditions"})
     public Optional<Chunk> getChunkIfAvailable() {
         if(this.cachedChunk == null){
             Chunk chunk = this.getChunk();
