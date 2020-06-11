@@ -9,9 +9,11 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = CoyoteLib.MODID)
 public class ModGameRules {
     public static GameRules.RuleKey<GameRules.BooleanValue> PREVENT_CREEPER_GRIEFING;
+    public static GameRules.RuleKey<GameRules.BooleanValue> FORCE_ALLOW_VILLAGER_GRIEFING;
 
     @SubscribeEvent
     public static void registerGameRules(RegisterGameRuleEvent event){
         PREVENT_CREEPER_GRIEFING = GameRules.register(CoyoteLib.MODID + ":preventCreeperGriefing", GameRules.BooleanValue.create(false));
+        FORCE_ALLOW_VILLAGER_GRIEFING = GameRules.register(CoyoteLib.MODID + ":forceAllowVillagerGriefing", GameRules.BooleanValue.create(false));
     }
 }
