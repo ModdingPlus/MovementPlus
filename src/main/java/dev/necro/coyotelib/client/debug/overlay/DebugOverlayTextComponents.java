@@ -44,6 +44,9 @@ public class DebugOverlayTextComponents {
         registry.register(new EntityDebugComponent().setRegistryName("entity"));
         registry.register(new ItemStackDebugComponent().setRegistryName("item_stack"));
 
+        registry.register(new PlayerDebugComponent().setRegistryName("player"));
+        registry.register(new VitalParametersDebugComponent().setRegistryName("vital_parameters"));
+        registry.register(new PotionEffectsDebugComponent().setRegistryName("potion_effects"));
         registry.register(new PlayingSoundsDebugComponent().setRegistryName("playing_sounds"));
         registry.register(new MidairJumpDebugComponent().setRegistryName("midair_jump"));
 

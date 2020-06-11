@@ -29,7 +29,11 @@
   "debug_component.coyotelib.entity": "Targeted Entity",
   "debug_component.coyotelib.item_stack": "Held Item",
 
+  "debug_component.coyotelib.player": "Player",
+  "debug_component.coyotelib.vital_parameters": "Vital Parameters",
+  "debug_component.coyotelib.potion_effects": "Potion Effects",
   "debug_component.coyotelib.playing_sounds": "Playing Sounds",
+  "debug_component.coyotelib.midair_jumps": "Midair Jumps",
 
   "debug_component.coyotelib.spacer": "Spacer",
   "debug_component.coyotelib.optional_spacer": "Optional Spacer"
