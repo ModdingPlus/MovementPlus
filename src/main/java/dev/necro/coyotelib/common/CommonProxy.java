@@ -18,7 +18,5 @@ public class CommonProxy {
         modEventBus.addListener(this::setup);
     }
 
-    public void setup(final FMLCommonSetupEvent event) {
-        PacketHandler.init();
-    }
+    public void setup(final FMLCommonSetupEvent event) {}
 }
