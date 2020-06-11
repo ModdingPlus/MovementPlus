@@ -30,7 +30,7 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
     protected World cachedIntegratedServerWorld = null;
     protected BlockPos cachedRenderViewBlockPos = null;
     protected Optional<BlockPos> cachedTargetedBlock;
-    protected Optional<BlockPos> cachedTargetedFluid ;
+    protected Optional<BlockPos> cachedTargetedFluid;
     protected Optional<Chunk> cachedChunk;
     protected Optional<Chunk> cachedServerChunk;
     protected FontRenderer fontRenderer;
