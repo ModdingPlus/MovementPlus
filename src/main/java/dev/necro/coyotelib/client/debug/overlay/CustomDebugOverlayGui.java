@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.overlay.DebugOverlayGui;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -110,6 +111,11 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
         this.cachedTargetedFluid=null;
         this.cachedChunk=null;
         this.cachedServerChunk=null;
+    }
+
+    @Override
+    public PlayerEntity getPlayerEntity() {
+        return this.mc.player;
     }
 
     @Override

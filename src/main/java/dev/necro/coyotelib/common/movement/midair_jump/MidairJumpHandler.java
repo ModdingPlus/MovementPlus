@@ -15,12 +15,12 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = CoyoteLib.MODID)
-public class MidAirJumpHandler {
+public class MidairJumpHandler {
 
-    private static final String MIDAIR_JUMP_NBT_KEY = CoyoteLib.MODID + ":midair_jump";
-    private static final String MULTIJUMP_JUMPS_NBT_KEY = "multijump.jumps";
-    private static final String COYOTETIME_TIME_OFF_GROUND_KEY = "coyotetime.timeOffGround";
-    private static final String COYOTETIME_JUMPED_KEY = "coyotetime.jumped";
+    public static final String MIDAIR_JUMP_NBT_KEY = CoyoteLib.MODID + ":midair_jump";
+    public static final String MULTIJUMP_JUMPS_NBT_KEY = "multijump.jumps";
+    public static final String COYOTETIME_TIME_OFF_GROUND_KEY = "coyotetime.timeOffGround";
+    public static final String COYOTETIME_JUMPED_KEY = "coyotetime.jumped";
 
     private static CompoundNBT getNBT(PlayerEntity player){
         CompoundNBT persistentData = player.getPersistentData();
@@ -104,7 +104,7 @@ public class MidAirJumpHandler {
 
             MidairJumpEvent.SpecialJump specialJumpEvent = new MidairJumpEvent.SpecialJump(player);
             if (!MinecraftForge.EVENT_BUS.post(specialJumpEvent) && specialJumpEvent.canJump()){
-                MidAirJumpHandler.performJump(player, side);
+                MidairJumpHandler.performJump(player, side);
                 if(specialJumpEvent.hasCallback())
                     specialJumpEvent.getCallback().accept(player);
                 return;
@@ -115,7 +115,7 @@ public class MidAirJumpHandler {
 
             if (!MinecraftForge.EVENT_BUS.post(setMultiJumpCountEvent) && jumps < setMultiJumpCountEvent.getJumps()) {
                 if (!MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.MultiJump.Pre(player))){
-                    MidAirJumpHandler.performJump(player, side);
+                    MidairJumpHandler.performJump(player, side);
                     nbt.putInt(MULTIJUMP_JUMPS_NBT_KEY, jumps + 1);
                     MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.MultiJump.Post(player));
                 }

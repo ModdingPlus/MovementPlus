@@ -14,7 +14,7 @@ public class MidairJumpPacket extends BasePacket<MidairJumpPacket> {
     public MidairJumpPacket(PacketBuffer packetBuffer) {super(packetBuffer);}
 
     @Override
-    public void readPacketData(PacketBuffer buf) throws IOException {}
+    public void readPacketData(PacketBuffer buf) {}
 
     @Override
     public void writePacketData(PacketBuffer buf) {}
@@ -24,7 +24,7 @@ public class MidairJumpPacket extends BasePacket<MidairJumpPacket> {
         NetworkEvent.Context context = ctx.get();
         PlayerEntity player = context.getSender();
         if (player != null){
-            context.enqueueWork(()->MidAirJumpHandler.playerJumpPacket(player));
+            context.enqueueWork(()-> MidairJumpHandler.playerJumpPacket(player));
         }
         context.setPacketHandled(true);
     }

@@ -2,6 +2,7 @@ package dev.necro.coyotelib.api.debug.overlay;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -10,6 +11,7 @@ import net.minecraft.world.chunk.Chunk;
 import java.util.Optional;
 
 public interface IDebugOverlayScreen {
+    PlayerEntity getPlayerEntity();
     Entity getRenderViewEntity();
     BlockPos getRenderViewBlockPos();
     World getWorld();

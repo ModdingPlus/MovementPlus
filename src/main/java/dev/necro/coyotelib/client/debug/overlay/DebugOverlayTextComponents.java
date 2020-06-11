@@ -45,6 +45,7 @@ public class DebugOverlayTextComponents {
         registry.register(new ItemStackDebugComponent().setRegistryName("item_stack"));
 
         registry.register(new PlayingSoundsDebugComponent().setRegistryName("playing_sounds"));
+        registry.register(new MidairJumpDebugComponent().setRegistryName("midair_jump"));
 
         registry.register(new SpacerDebugComponent().setRegistryName("spacer"));
         registry.register(new OptionalSpacerDebugComponent().setRegistryName("optional_spacer"));
