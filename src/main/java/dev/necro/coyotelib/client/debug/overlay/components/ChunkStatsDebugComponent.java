@@ -24,7 +24,7 @@ public class ChunkStatsDebugComponent extends DebugOverlayTextComponent {
     private String getServerChunkStats(Minecraft minecraft) {
         IntegratedServer integratedserver = minecraft.getIntegratedServer();
         if (integratedserver != null) {
-            ServerWorld serverworld = integratedserver.getWorld(minecraft.world.getDimension().getType());
+            ServerWorld serverworld = integratedserver.getWorld(minecraft.world.func_234923_W_());
             if (serverworld != null) {
                 return serverworld.getProviderName();
             }

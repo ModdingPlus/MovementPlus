@@ -15,6 +15,6 @@ public class DimensionDebugComponent extends DebugOverlayTextComponent {
                                IDebugOverlayScreen debugOverlay) {
         World world = debugOverlay.getIntegratedServerWorld();
         int force_loaded = world instanceof ServerWorld ? ((ServerWorld)world).getForcedChunks().size() : 0;
-        list.add(String.format("%s FC: %d",world.dimension.getType().getRegistryName(), force_loaded));
+        list.add(String.format("%s FC: %d", world.func_234923_W_().func_240901_a_(), force_loaded)); // @TODO: func_234923_W_ -> getDimension ; func_240901_a_ -> getRegistryName
     }
 }

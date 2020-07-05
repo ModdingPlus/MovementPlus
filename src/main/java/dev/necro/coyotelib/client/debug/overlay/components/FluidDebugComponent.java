@@ -3,8 +3,8 @@ package dev.necro.coyotelib.client.debug.overlay.components;
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
 import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
-import net.minecraft.fluid.IFluidState;
-import net.minecraft.state.IProperty;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.state.Property;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +23,7 @@ public class FluidDebugComponent extends DebugOverlayTextComponent {
         Optional<BlockPos> targetedFluid = debugOverlay.getTargetedFluid();
         if (targetedFluid.isPresent()) {
             BlockPos blockPos = targetedFluid.get();
-            IFluidState fluidState = minecraft.world.getFluidState(blockPos);
+            FluidState fluidState = minecraft.world.getFluidState(blockPos);
 
             list.addAll(Arrays.asList(
                     TextFormatting.UNDERLINE + "Targeted Fluid",
@@ -34,8 +34,8 @@ public class FluidDebugComponent extends DebugOverlayTextComponent {
         }
     }
 
-    private String getPropertyString(Map.Entry<IProperty<?>, Comparable<?>> entry) {
-        IProperty<?> property = entry.getKey();
+    private String getPropertyString(Map.Entry<Property<?>, Comparable<?>> entry) {
+        Property<?> property = entry.getKey();
         Comparable<?> value = entry.getValue();
         String s = Util.getValueName(property, value);
         if (Boolean.TRUE.equals(value)) {

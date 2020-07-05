@@ -36,5 +36,9 @@
   "debug_component.coyotelib.midair_jumps": "Midair Jumps",
 
   "debug_component.coyotelib.spacer": "Spacer",
-  "debug_component.coyotelib.optional_spacer": "Optional Spacer"
+  "debug_component.coyotelib.optional_spacer": "Optional Spacer",
+
+  "gamerule.coyotelib:arachnophobia": "Spawn Spiders",
+  "gamerule.coyotelib:forceAllowVillagerGriefing": "Force allow Villager \"griefing\"",
+  "gamerule.coyotelib:preventCreeperGriefing": "Prevent Creeper griefing"
 }

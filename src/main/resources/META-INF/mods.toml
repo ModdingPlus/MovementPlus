@@ -19,13 +19,13 @@ A library mod providing things like a double jump and coyote time API that for m
 [[dependencies.coyotelib]]
     modId="forge"
     mandatory=true
-    versionRange="[31,)"
+    versionRange="[32,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.coyotelib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16,)"
     ordering="NONE"
     side="BOTH"

@@ -35,7 +35,8 @@ public class CustomDebugOverlayHandler {
             }
         }
 
+        // @TODO: check if update method like with ForgeDebugOverlay is needed
         if(event.getType() == RenderGameOverlayEvent.ElementType.ALL && _OVERLAY_SHOWN)
-            customDebugOverlayGui.render();
+            customDebugOverlayGui.render(event.getMatrixStack());
     }
 }

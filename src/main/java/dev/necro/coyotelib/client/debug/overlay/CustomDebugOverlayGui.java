@@ -1,6 +1,7 @@
 package dev.necro.coyotelib.client.debug.overlay;
 
 import com.google.common.base.Strings;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.DataFixUtils;
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
 import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
@@ -43,18 +44,18 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
     }
 
     @Override
-    public void render() {
+    public void render(MatrixStack matrixStack) {
         ChunkPos chunkPos = new ChunkPos(this.getRenderViewBlockPos());
         if (!Objects.equals(this.chunkPos, chunkPos)) {
             this.chunkPos = chunkPos;
             this.resetChunk();
         }
-        super.render();
+        super.render(matrixStack);
         this.clearCachedFields();
     }
 
     @Override
-    protected void renderDebugInfoLeft() {
+    protected void renderDebugInfoLeft(MatrixStack matrixStack) {
         List<String> list = this.getDebugInfoLeft();
         int line_height = 9;
 
@@ -63,8 +64,8 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
             if (!Strings.isNullOrEmpty(s)) {
                 int width = this.fontRenderer.getStringWidth(s);
                 int y = 2 + line_height * line;
-                fill(1, y - 1, 2 + width + 1, y + line_height - 1, -1873784752);
-                this.fontRenderer.drawString(s, 2.0F, (float)y, 14737632);
+                func_238467_a_(matrixStack,1, y - 1, 2 + width + 1, y + line_height - 1, -1873784752); // @TODO: func_238467_a_ -> fill
+                this.fontRenderer.func_238421_b_(matrixStack, s, 2.0F, (float)y, 14737632); // @TODO: func_238421_b_ -> drawString
             }
         }
     }
@@ -126,7 +127,7 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
     @Override
     public BlockPos getRenderViewBlockPos(){
         if(this.cachedRenderViewBlockPos == null) {
-            this.cachedRenderViewBlockPos = this.getRenderViewEntity().getPosition();
+            this.cachedRenderViewBlockPos = this.getRenderViewEntity().func_233580_cy_(); // @TODO: func_233580_cy_ -> getPosition
         }
         return this.cachedRenderViewBlockPos;
     }
@@ -141,7 +142,7 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
     public World getIntegratedServerWorld() {
         if(this.cachedIntegratedServerWorld == null) {
             this.cachedIntegratedServerWorld = DataFixUtils.orElse(Optional.ofNullable(this.mc.getIntegratedServer())
-                    .map((integratedServer) -> integratedServer.getWorld(this.mc.world.dimension.getType())), this.mc.world);
+                    .map((integratedServer) -> integratedServer.getWorld(this.mc.world.func_234923_W_())), this.mc.world); // @TODO: func_234923_W_ -> getRegistryKey ?
         }
         return this.cachedIntegratedServerWorld;
     }

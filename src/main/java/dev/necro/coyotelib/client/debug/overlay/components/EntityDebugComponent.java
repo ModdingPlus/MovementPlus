@@ -5,7 +5,7 @@ import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.Entity;
-import net.minecraft.state.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.TextFormatting;
@@ -23,15 +23,15 @@ public class EntityDebugComponent extends DebugOverlayTextComponent {
             list.add(TextFormatting.UNDERLINE + "Targeted Entity");
             list.add(entity.getType().getRegistryName().toString());
             entity.getType().getTags().forEach(t -> list.add("#" + t));
-            if(Screen.hasShiftDown()) {
+            if(Screen.func_231173_s_()) { // @TODO func_231173_s_ -> hasShiftDown
                 list.add(entity.getPersistentData().toString());
             }
         }
     }
 
 
-    private String getPropertyString(Map.Entry<IProperty<?>, Comparable<?>> entry) {
-        IProperty<?> property = entry.getKey();
+    private String getPropertyString(Map.Entry<Property<?>, Comparable<?>> entry) {
+        Property<?> property = entry.getKey();
         Comparable<?> value = entry.getValue();
         String s = Util.getValueName(property, value);
         if (Boolean.TRUE.equals(value)) {

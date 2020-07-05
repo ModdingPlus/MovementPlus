@@ -18,7 +18,7 @@ public class BiomeDebugComponent extends DebugOverlayTextComponent {
         BlockPos blockPos = debugOverlay.getRenderViewBlockPos();
         if (blockPos.getY() >= 0 && blockPos.getY() < 256) {
             Biome biome = minecraft.world.getBiome(blockPos);
-            if(Screen.hasShiftDown())
+            if(Screen.func_231173_s_()) // @TODO func_231173_s_ -> hasShiftDown
                 list.add(String.format("Biome: %s (%s)", ForgeRegistries.BIOMES.getKey(biome), biome.getCategory().getName()));
             else
                 list.add(String.format("Biome: %s", ForgeRegistries.BIOMES.getKey(biome)));

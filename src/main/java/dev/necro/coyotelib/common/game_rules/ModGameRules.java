@@ -14,8 +14,9 @@ public class ModGameRules {
 
     @SubscribeEvent
     public static void registerGameRules(RegisterGameRuleEvent event){
-        PREVENT_CREEPER_GRIEFING = GameRules.register(CoyoteLib.MODID + ":preventCreeperGriefing", GameRules.BooleanValue.create(false));
-        FORCE_ALLOW_VILLAGER_GRIEFING = GameRules.register(CoyoteLib.MODID + ":forceAllowVillagerGriefing", GameRules.BooleanValue.create(false));
-        ARACHNOPHOBIA = GameRules.register(CoyoteLib.MODID + ":arachnophobia", GameRules.BooleanValue.create(false));
+        // @TODO: func_234903_a_ -> register
+        PREVENT_CREEPER_GRIEFING = GameRules.func_234903_a_(CoyoteLib.MODID + ":preventCreeperGriefing", GameRules.Category.MOBS, GameRules.BooleanValue.create(false));
+        FORCE_ALLOW_VILLAGER_GRIEFING = GameRules.func_234903_a_(CoyoteLib.MODID + ":forceAllowVillagerGriefing", GameRules.Category.MOBS, GameRules.BooleanValue.create(false));
+        ARACHNOPHOBIA = GameRules.func_234903_a_(CoyoteLib.MODID + ":arachnophobia", GameRules.Category.SPAWNING, GameRules.BooleanValue.create(false));
     }
 }

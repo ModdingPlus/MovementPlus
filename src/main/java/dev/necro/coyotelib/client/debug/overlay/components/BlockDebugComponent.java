@@ -4,7 +4,7 @@ import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
 import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.state.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -31,8 +31,8 @@ public class BlockDebugComponent extends DebugOverlayTextComponent {
         }
     }
 
-    private String getPropertyString(Map.Entry<IProperty<?>, Comparable<?>> entry) {
-        IProperty<?> property = entry.getKey();
+    private String getPropertyString(Map.Entry<Property<?>, Comparable<?>> entry) {
+        Property<?> property = entry.getKey();
         Comparable<?> value = entry.getValue();
         String s = Util.getValueName(property, value);
         if (Boolean.TRUE.equals(value)) {

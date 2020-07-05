@@ -6,7 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.state.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -22,12 +22,12 @@ public class PlayerDebugComponent extends DebugOverlayTextComponent {
                                Minecraft minecraft,
                                IDebugOverlayScreen debugOverlay) {
         PlayerEntity player = debugOverlay.getPlayerEntity();
-        if(Screen.hasShiftDown()) {
+        if(Screen.func_231173_s_()) { // @TODO previously `hasShiftDown()`
             list.add(
                     String.format(
                             "Name: %s (%s), UUID: %s",
                             player.getScoreboardName(),
-                            player.getDisplayName().getFormattedText(),
+                            player.getDisplayName().getString(),
                             player.getUniqueID().toString()
                     )
             );
@@ -36,7 +36,7 @@ public class PlayerDebugComponent extends DebugOverlayTextComponent {
                     String.format(
                             "Name: %s (%s)",
                             player.getScoreboardName(),
-                            player.getDisplayName().getFormattedText()
+                            player.getDisplayName().getString()
                     )
             );
         }
