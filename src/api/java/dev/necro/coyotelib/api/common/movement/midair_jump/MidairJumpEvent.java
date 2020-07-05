@@ -67,7 +67,7 @@ public abstract class MidairJumpEvent extends PlayerEvent{
             /**
              * Whether or not the even has already been handled cosmetically,
              * meaning primarily applying cosmetic effects like particles and sounds
-             * @return wether the event has been handled
+             * @return whether the event has been handled
              */
             public boolean isHandled(){ return this._isHandled; }
 
@@ -168,9 +168,9 @@ public abstract class MidairJumpEvent extends PlayerEvent{
             }
 
             /**
-             * Wether or not the even has already been handled cosmetically,
+             * Whether or not the even has already been handled cosmetically,
              * meaning primarily applying cosmetic effects like particles and sounds
-             * @return wether the event has been handled
+             * @return whether the event has been handled
              */
             public boolean isHandled(){ return this._isHandled; }
 
@@ -178,6 +178,15 @@ public abstract class MidairJumpEvent extends PlayerEvent{
              * Indicate that the event has been handled cosmetically
              */
             public void setHandled(){ this._isHandled = true; }
+        }
+    }
+
+    /**
+     * Fired whenever a players midair jump count would reset, usually when the player is on the ground.
+     */
+    public static class Reset extends MidairJumpEvent {
+        public Reset(PlayerEntity player) {
+            super(player);
         }
     }
 }

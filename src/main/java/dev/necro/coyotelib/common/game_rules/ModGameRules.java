@@ -10,10 +10,12 @@ import net.minecraftforge.fml.common.Mod;
 public class ModGameRules {
     public static GameRules.RuleKey<GameRules.BooleanValue> PREVENT_CREEPER_GRIEFING;
     public static GameRules.RuleKey<GameRules.BooleanValue> FORCE_ALLOW_VILLAGER_GRIEFING;
+    public static GameRules.RuleKey<GameRules.BooleanValue> ARACHNOPHOBIA;
 
     @SubscribeEvent
     public static void registerGameRules(RegisterGameRuleEvent event){
         PREVENT_CREEPER_GRIEFING = GameRules.register(CoyoteLib.MODID + ":preventCreeperGriefing", GameRules.BooleanValue.create(false));
         FORCE_ALLOW_VILLAGER_GRIEFING = GameRules.register(CoyoteLib.MODID + ":forceAllowVillagerGriefing", GameRules.BooleanValue.create(false));
+        ARACHNOPHOBIA = GameRules.register(CoyoteLib.MODID + ":arachnophobia", GameRules.BooleanValue.create(false));
     }
 }

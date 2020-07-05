@@ -3,6 +3,7 @@ package dev.necro.coyotelib.client.movement;
 import dev.necro.coyotelib.CoyoteLib;
 import dev.necro.coyotelib.api.client.movement.PlayerMovementInputEvent;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.MovementInput;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;

@@ -50,6 +50,9 @@ public class MidairJumpHandler {
                         || player.isActualySwimming()
                         || player.isSleeping())){
             int jumps = nbt.getInt(MULTIJUMP_JUMPS_NBT_KEY);
+
+            MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.Reset(player));
+
             if (jumps != 0){
                 nbt.putInt(MULTIJUMP_JUMPS_NBT_KEY, 0);
             }
