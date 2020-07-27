@@ -3,6 +3,7 @@ package dev.necro.coyotelib;
 import dev.necro.coyotelib.client.ClientProxy;
 import dev.necro.coyotelib.client.config.ClientConfiguration;
 import dev.necro.coyotelib.common.CommonProxy;
+import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;

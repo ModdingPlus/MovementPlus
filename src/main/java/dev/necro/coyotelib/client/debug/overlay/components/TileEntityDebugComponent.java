@@ -31,7 +31,7 @@ public class TileEntityDebugComponent extends DebugOverlayTextComponent {
                         tileEntity.getType().getRegistryName().toString(),
                         String.format("Tickable: %b", tileEntity instanceof ITickableTileEntity)
                 ));
-                if(Screen.func_231173_s_()) { // @TODO func_231173_s_ -> hasShiftDown
+                if(Screen.hasShiftDown()) {
                     CompoundNBT nbt = tileEntity.serializeNBT().copy();
                     nbt.remove("x");
                     nbt.remove("y");

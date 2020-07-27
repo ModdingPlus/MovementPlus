@@ -22,7 +22,7 @@ import net.minecraftforge.fml.loading.FMLCommonLaunchHandler;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = CoyoteLib.MODID)
 public class GameRuleRegistrationHandler {
-    private static boolean registered = false;
+    public static boolean registered = false;
 
     @SubscribeEvent
     public static void init(final FMLServerAboutToStartEvent event){
@@ -33,12 +33,5 @@ public class GameRuleRegistrationHandler {
 
         CommandDispatcher<CommandSource> dispatcher = event.getServer().getCommandManager().getDispatcher();
         GameRuleCommand.register(dispatcher);
-    }
-
-    @SubscribeEvent
-    public static void init(final GuiOpenEvent event){
-        if(GameRuleRegistrationHandler.registered || !(event.getGui() instanceof MainMenuScreen)) return;
-        MinecraftForge.EVENT_BUS.post(new RegisterGameRuleEvent());
-        GameRuleRegistrationHandler.registered = true;
     }
 }

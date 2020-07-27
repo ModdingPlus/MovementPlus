@@ -24,7 +24,7 @@ public class BlockDebugComponent extends DebugOverlayTextComponent {
             BlockPos blockPos = targetedBlock.get();
             BlockState blockstate = minecraft.world.getBlockState(blockPos);
 
-            list.add(TextFormatting.UNDERLINE + "Targeted Block");
+            list.add(String.format("%sTargeted Block: %d, %d, %d", TextFormatting.UNDERLINE, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
             list.add(blockstate.getBlock().getRegistryName().toString());
             blockstate.getValues().entrySet().forEach(entry -> list.add(this.getPropertyString(entry)));
             blockstate.getBlock().getTags().forEach(t -> list.add("#" + t));

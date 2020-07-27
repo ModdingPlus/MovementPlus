@@ -25,10 +25,8 @@ public class FluidDebugComponent extends DebugOverlayTextComponent {
             BlockPos blockPos = targetedFluid.get();
             FluidState fluidState = minecraft.world.getFluidState(blockPos);
 
-            list.addAll(Arrays.asList(
-                    TextFormatting.UNDERLINE + "Targeted Fluid",
-                    fluidState.getFluid().getRegistryName().toString()
-            ));
+            list.add(String.format("%sTargeted Fluid: %d, %d, %d", TextFormatting.UNDERLINE, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
+            list.add(fluidState.getFluid().getRegistryName().toString());
             fluidState.getValues().entrySet().forEach(entry -> list.add(this.getPropertyString(entry)));
             fluidState.getFluid().getTags().forEach(t -> list.add("#" + t));
         }

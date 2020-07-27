@@ -2,10 +2,12 @@ package dev.necro.coyotelib.client.debug.overlay.components;
 
 import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
 import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.ServerWorldInfo;
 
 public class DimensionDebugComponent extends DebugOverlayTextComponent {
 

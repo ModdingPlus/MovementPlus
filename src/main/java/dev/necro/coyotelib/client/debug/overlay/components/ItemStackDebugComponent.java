@@ -27,7 +27,7 @@ public class ItemStackDebugComponent extends DebugOverlayTextComponent {
                 list.add(String.format("Damage: %d / %d", stack.getDamage(), stack.getMaxDamage()));
             }
             stack.getItem().getTags().forEach(t -> list.add("#" + t));
-            if(Screen.func_231173_s_() && stack.hasTag()) // @TODO func_231173_s_ -> hasShiftDown
+            if(Screen.hasShiftDown() && stack.hasTag())
                 list.add(stack.getTag().toString());
         }
     }

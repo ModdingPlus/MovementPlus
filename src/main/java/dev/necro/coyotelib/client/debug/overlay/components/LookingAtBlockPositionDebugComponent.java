@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.Optional;
 
+@Deprecated
 public class LookingAtBlockPositionDebugComponent extends DebugOverlayTextComponent {
     @Override
     public void addInformation(NonNullList<String> list, Minecraft minecraft, IDebugOverlayScreen debugOverlay) {

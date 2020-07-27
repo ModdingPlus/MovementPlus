@@ -17,7 +17,7 @@ public class MidairJumpDebugComponent extends DebugOverlayTextComponent {
                                IDebugOverlayScreen debugOverlay) {
         CompoundNBT nbt = debugOverlay.getPlayerEntity().getPersistentData().getCompound(MidairJumpHandler.MIDAIR_JUMP_NBT_KEY);
 
-        if(Screen.func_231173_s_()) { // @TODO func_231173_s_ -> hasShiftDown
+        if(Screen.hasShiftDown()) {
             list.add(
                     String.format(
                             "MJJ: %d, CTT: %d, CTJ: %s",

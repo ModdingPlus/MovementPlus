@@ -23,7 +23,7 @@ public class EntityDebugComponent extends DebugOverlayTextComponent {
             list.add(TextFormatting.UNDERLINE + "Targeted Entity");
             list.add(entity.getType().getRegistryName().toString());
             entity.getType().getTags().forEach(t -> list.add("#" + t));
-            if(Screen.func_231173_s_()) { // @TODO func_231173_s_ -> hasShiftDown
+            if(Screen.hasShiftDown()) {
                 list.add(entity.getPersistentData().toString());
             }
         }

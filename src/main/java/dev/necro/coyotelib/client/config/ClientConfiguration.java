@@ -35,8 +35,6 @@ public class ClientConfiguration {
                                     "coyotelib:heightmap",
                                     "coyotelib:biome",
                                     "coyotelib:local_difficulty",
-                                    "coyotelib:looking_at_block",
-                                    "coyotelib:looking_at_fluid",
                                     "coyotelib:shader",
                                     "coyotelib:sounds"
                             ),

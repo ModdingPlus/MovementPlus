@@ -22,7 +22,7 @@ public class PlayerDebugComponent extends DebugOverlayTextComponent {
                                Minecraft minecraft,
                                IDebugOverlayScreen debugOverlay) {
         PlayerEntity player = debugOverlay.getPlayerEntity();
-        if(Screen.func_231173_s_()) { // @TODO previously `hasShiftDown()`
+        if(Screen.hasShiftDown()) {
             list.add(
                     String.format(
                             "Name: %s (%s), UUID: %s",

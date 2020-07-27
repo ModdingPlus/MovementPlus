@@ -16,7 +16,7 @@ public class VitalParametersDebugComponent extends DebugOverlayTextComponent {
                                IDebugOverlayScreen debugOverlay) {
         PlayerEntity player = debugOverlay.getPlayerEntity();
         FoodStats foodStats = player.getFoodStats();
-        if(Screen.func_231173_s_()) { // @TODO func_231173_s_ -> hasShiftDown
+        if(Screen.hasShiftDown()) {
             list.add(
                     String.format(
                             "Health: %.1f/%.1f, Food: %d(%.1f), Air: %d/%d",

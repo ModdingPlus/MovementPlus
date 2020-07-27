@@ -64,8 +64,8 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
             if (!Strings.isNullOrEmpty(s)) {
                 int width = this.fontRenderer.getStringWidth(s);
                 int y = 2 + line_height * line;
-                func_238467_a_(matrixStack,1, y - 1, 2 + width + 1, y + line_height - 1, -1873784752); // @TODO: func_238467_a_ -> fill
-                this.fontRenderer.func_238421_b_(matrixStack, s, 2.0F, (float)y, 14737632); // @TODO: func_238421_b_ -> drawString
+                fill(matrixStack,1, y - 1, 2 + width + 1, y + line_height - 1, -1873784752);
+                this.fontRenderer.drawString(matrixStack, s, 2.0F, (float)y, 14737632);
             }
         }
     }
@@ -127,7 +127,7 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
     @Override
     public BlockPos getRenderViewBlockPos(){
         if(this.cachedRenderViewBlockPos == null) {
-            this.cachedRenderViewBlockPos = this.getRenderViewEntity().func_233580_cy_(); // @TODO: func_233580_cy_ -> getPosition
+            this.cachedRenderViewBlockPos = this.getRenderViewEntity().getPosition();
         }
         return this.cachedRenderViewBlockPos;
     }
