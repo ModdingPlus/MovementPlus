@@ -20,7 +20,7 @@ public class PlayerMovementInputHandler {
 
     @SubscribeEvent
     public static void playerTick(TickEvent.PlayerTickEvent event){
-        if (event.side == LogicalSide.SERVER) return;
+        if (event.side == LogicalSide.SERVER || !(event.player instanceof ClientPlayerEntity)) return;
 
         ClientPlayerEntity player = (ClientPlayerEntity)event.player;
 
