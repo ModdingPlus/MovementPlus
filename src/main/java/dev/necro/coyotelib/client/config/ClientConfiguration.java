@@ -36,6 +36,7 @@ public class ClientConfiguration {
                                     "coyotelib:biome",
                                     "coyotelib:local_difficulty",
                                     "coyotelib:shader",
+                                    "coyotelib:entity_counts",
                                     "coyotelib:sounds"
                             ),
                             s -> s instanceof String && DebugOverlayTextComponentsRegistry.INSTANCE.containsKey(new ResourceLocation((String)s))

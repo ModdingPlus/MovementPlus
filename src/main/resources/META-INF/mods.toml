@@ -1,6 +1,7 @@
 modLoader="javafml"
 loaderVersion="[31,)"
 issueTrackerURL="https://github.com/Necr0/Coyote-Lib/issues"
+license="Unlicense"
 
 [[mods]]
 modId="coyotelib"

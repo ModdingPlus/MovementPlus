@@ -142,7 +142,7 @@ public class CustomDebugOverlayGui extends DebugOverlayGui implements IDebugOver
     public World getIntegratedServerWorld() {
         if(this.cachedIntegratedServerWorld == null) {
             this.cachedIntegratedServerWorld = DataFixUtils.orElse(Optional.ofNullable(this.mc.getIntegratedServer())
-                    .map((integratedServer) -> integratedServer.getWorld(this.mc.world.func_234923_W_())), this.mc.world); // @TODO: func_234923_W_ -> getRegistryKey ?
+                    .map((integratedServer) -> integratedServer.getWorld(this.mc.world.getDimensionKey())), this.mc.world);
         }
         return this.cachedIntegratedServerWorld;
     }

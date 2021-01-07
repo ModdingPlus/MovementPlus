@@ -33,6 +33,7 @@ public class DebugOverlayTextComponents {
         registry.register(new LookingAtBlockPositionDebugComponent().setRegistryName("looking_at_block"));
         registry.register(new LookingAtFluidPositionDebugComponent().setRegistryName("looking_at_fluid"));
         registry.register(new ShaderDebugComponent().setRegistryName("shader"));
+        registry.register(new EntityCountsDebugComponent().setRegistryName("entity_counts"));
         registry.register(new SoundsDebugComponent().setRegistryName("sounds"));
 
         registry.register(new MemoryDebugComponent().setRegistryName("memory"));

@@ -9,6 +9,6 @@ public class SoundsDebugComponent extends DebugOverlayTextComponent {
     @Override
     public void addInformation(NonNullList<String> list, Minecraft minecraft, IDebugOverlayScreen debugOverlay) {
         //noinspection ConstantConditions
-        list.add(String.format("%s (Mood %d%%)", minecraft.getSoundHandler().getDebugString(), Math.round(minecraft.player.func_239206_w_() * 100.0F)));
+        list.add(String.format("%s (Mood %d%%)", minecraft.getSoundHandler().getDebugString(), Math.round(minecraft.player.getDarknessAmbience() * 100.0F)));
     }
 }

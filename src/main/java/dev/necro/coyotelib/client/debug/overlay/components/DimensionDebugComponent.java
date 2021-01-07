@@ -4,6 +4,7 @@ import dev.necro.coyotelib.api.debug.overlay.DebugOverlayTextComponent;
 import dev.necro.coyotelib.api.debug.overlay.IDebugOverlayScreen;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.overlay.DebugOverlayGui;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -17,6 +18,6 @@ public class DimensionDebugComponent extends DebugOverlayTextComponent {
                                IDebugOverlayScreen debugOverlay) {
         World world = debugOverlay.getIntegratedServerWorld();
         int force_loaded = world instanceof ServerWorld ? ((ServerWorld)world).getForcedChunks().size() : 0;
-        list.add(String.format("%s FC: %d", world.func_234923_W_().func_240901_a_(), force_loaded)); // @TODO: func_234923_W_ -> getDimension ; func_240901_a_ -> getRegistryName
+        list.add(String.format("%s FC: %d", world.getDimensionKey().getLocation(), force_loaded));
     }
 }

@@ -23,7 +23,7 @@ public class LocalDifficultyDebugComponent extends DebugOverlayTextComponent {
             long inhabitedTime = 0L;
             float moonPhaseFactor = 0.0F;
             if (chunk.isPresent()) {
-                moonPhaseFactor = world.getCurrentMoonPhaseFactor();
+                moonPhaseFactor = world.getMoonFactor();
                 inhabitedTime = chunk.get().getInhabitedTime();
             }
 
