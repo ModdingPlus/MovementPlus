@@ -1,10 +1,10 @@
 package dev.necro.coyotelib.api.common.movement.midair_jump;
 
-import jdk.internal.jline.internal.Nullable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public abstract class MidairJumpEvent extends PlayerEvent{

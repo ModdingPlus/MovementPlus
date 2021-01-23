@@ -1,6 +1,5 @@
 package dev.necro.coyotelib.api.debug.overlay;
 
-import jdk.internal.jline.internal.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.Util;
@@ -8,6 +7,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import javax.annotation.Nullable;
 
 public abstract class DebugOverlayTextComponent extends ForgeRegistryEntry<DebugOverlayTextComponent> {
     /**
