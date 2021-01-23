@@ -12,7 +12,7 @@ displayURL="https://www.curseforge.com/minecraft/mc-mods/coyotelib"
 logoFile="coyotelib.png"
 credits="Thanks to the Forge Team, the Forge Discord Channel, and the MMD Discord Channel."
 
-authors="Necro"
+authors="Qb"
 description='''
 A library mod providing things like a double jump and coyote time API that for mods to tap into. It also provides a customizable debug overlay and custom gamerules.
 '''
