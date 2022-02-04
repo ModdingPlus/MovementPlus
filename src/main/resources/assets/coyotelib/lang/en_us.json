@@ -1,3 +1,4 @@
 {
-  "key.coyotelib.debug_overlay": "Toggle CoyoteLib Debug Overlay"
+  "gamerule.coyoteTime": "Coyote time in ticks",
+  "gamerule.multiJumps": "Base midair jump count"
 }

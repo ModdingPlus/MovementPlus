@@ -1,5 +1,6 @@
 package dev.necro.coyotelib.common;
 
+import dev.necro.coyotelib.common.gamerules.ModGameRules;
 import dev.necro.coyotelib.common.network.PacketHandler;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.level.GameRules;
@@ -21,10 +22,6 @@ public class CommonProxy {
     }
 
     public void setup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(()->{
-            GameRules.register("coyoteTime", GameRules.Category.PLAYER, GameRules.IntegerValue.create(3));
-            GameRules.register("multiJumps", GameRules.Category.PLAYER, GameRules.IntegerValue.create(0));
-        });
-        ExperienceOrb
+        event.enqueueWork(ModGameRules::register);
     }
 }

@@ -2,6 +2,7 @@ package dev.necro.coyotelib.common.movement.midair_jump;
 
 import dev.necro.coyotelib.CoyoteLib;
 import dev.necro.coyotelib.client.movement.PlayerMovementInputEvent;
+import dev.necro.coyotelib.common.gamerules.ModGameRules;
 import dev.necro.coyotelib.common.network.PacketHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -89,7 +90,6 @@ public class MidairJumpHandler {
     }
 
     public static void attemptPlayerJump(Player player, LogicalSide side){
-        System.out.println("jump attempt pre");
         if (!player.isAlive()) return;
         if (!(player.isSwimming()
                 || player.isVisuallySwimming()
@@ -98,15 +98,13 @@ public class MidairJumpHandler {
                 || player.isFallFlying()
                 || player.isSleeping())) {
             CompoundTag nbt = getNBT(player);
-            System.out.println("jump attempt");
 
             if (player.getDeltaMovement().y < 0 && !nbt.getBoolean(COYOTETIME_JUMPED_KEY)){
-                int timeOffGround = nbt.getInt(COYOTETIME_TIME_OFF_GROUND_KEY);
-
-                System.out.println("coyote");
-
-                MidairJumpEvent.SetCoyoteTime event = new MidairJumpEvent.SetCoyoteTime(player, 15);
+                int baseCoyoteTime = player.getLevel().getGameRules().getInt(ModGameRules.COYOTE_TIME);
+                MidairJumpEvent.SetCoyoteTime event = new MidairJumpEvent.SetCoyoteTime(player, baseCoyoteTime);
                 MinecraftForge.EVENT_BUS.post(event);
+
+                int timeOffGround = nbt.getInt(COYOTETIME_TIME_OFF_GROUND_KEY);
                 if (timeOffGround <= event.getCoyoteTime()) {
 
                     if(!MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.CoyoteTimeJump.Pre(player))){
@@ -114,6 +112,7 @@ public class MidairJumpHandler {
                         MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.CoyoteTimeJump.Post(player));
                         return;
                     }
+
                 }
             }
 
@@ -125,16 +124,14 @@ public class MidairJumpHandler {
                 return;
             }
 
-            MidairJumpEvent.SetMultiJumpCount setMultiJumpCountEvent = new MidairJumpEvent.SetMultiJumpCount(player, 3);
+            int baseMultiJumps = player.getLevel().getGameRules().getInt(ModGameRules.MULTI_JUMPS);
+            MidairJumpEvent.SetMultiJumpCount setMultiJumpCountEvent = new MidairJumpEvent.SetMultiJumpCount(player, baseMultiJumps);
             int jumps = nbt.getInt(MULTIJUMP_JUMPS_NBT_KEY);
 
             System.out.println("multijump attempt");
 
             if (!MinecraftForge.EVENT_BUS.post(setMultiJumpCountEvent) && jumps < setMultiJumpCountEvent.getJumps()) {
                 if (!MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.MultiJump.Pre(player))){
-
-                    System.out.println("multijump perform");
-
                     MidairJumpHandler.performJump(player, side);
                     nbt.putInt(MULTIJUMP_JUMPS_NBT_KEY, jumps + 1);
                     MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.MultiJump.Post(player));
