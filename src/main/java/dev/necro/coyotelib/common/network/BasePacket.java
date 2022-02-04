@@ -1,7 +1,7 @@
 package dev.necro.coyotelib.common.network;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,7 +13,7 @@ public abstract class BasePacket<T> {
 
     public BasePacket(){}
 
-    public BasePacket(PacketBuffer buf){
+    public BasePacket(FriendlyByteBuf buf){
         try {
             this.readPacketData(buf);
         } catch (IOException e){
@@ -25,12 +25,12 @@ public abstract class BasePacket<T> {
     /**
      * Reads the raw packet data from the data stream.
      */
-    public abstract void readPacketData(PacketBuffer buf) throws IOException;
+    public abstract void readPacketData(FriendlyByteBuf buf) throws IOException;
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public abstract void writePacketData(PacketBuffer buf) throws IOException;
+    public abstract void writePacketData(FriendlyByteBuf buf) throws IOException;
 
     /**
      * Passes this Packet on to the NetHandler for processing.

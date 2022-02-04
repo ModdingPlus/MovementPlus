@@ -1,13 +1,12 @@
 package dev.necro.coyotelib.common.movement.midair_jump;
 
 import dev.necro.coyotelib.CoyoteLib;
-import dev.necro.coyotelib.api.client.movement.PlayerMovementInputEvent;
-import dev.necro.coyotelib.api.common.movement.midair_jump.MidairJumpEvent;
+import dev.necro.coyotelib.client.movement.PlayerMovementInputEvent;
 import dev.necro.coyotelib.common.network.PacketHandler;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,33 +21,42 @@ public class MidairJumpHandler {
     public static final String COYOTETIME_TIME_OFF_GROUND_KEY = "coyotetime.timeOffGround";
     public static final String COYOTETIME_JUMPED_KEY = "coyotetime.jumped";
 
-    private static CompoundNBT getNBT(PlayerEntity player){
-        CompoundNBT persistentData = player.getPersistentData();
-        if(!persistentData.contains(MIDAIR_JUMP_NBT_KEY, Constants.NBT.TAG_COMPOUND))
-            persistentData.put(MIDAIR_JUMP_NBT_KEY, new CompoundNBT());
+    private static CompoundTag getNBT(Player player){
+        CompoundTag persistentData = player.getPersistentData();
+        if(!persistentData.contains(MIDAIR_JUMP_NBT_KEY, Tag.TAG_COMPOUND))
+            persistentData.put(MIDAIR_JUMP_NBT_KEY, new CompoundTag());
         return persistentData.getCompound(MIDAIR_JUMP_NBT_KEY);
     }
 
     /** Detect when the player is on the ground and reset jumps accordingly */
     @SubscribeEvent
     public static void playerTick(TickEvent.PlayerTickEvent event){
-        PlayerEntity player = event.player;
+        Player player = event.player;
 
-        CompoundNBT nbt = getNBT(player);
+        CompoundTag nbt = getNBT(player);
 
-        if (player.isAlive() &&  ((player.onGround && !player.isElytraFlying()) || player.isSleeping())){
+        if (player.isAlive()
+                && ((player.isOnGround() && !player.isFallFlying())
+                    || player.isSwimming()
+                    || player.isVisuallySwimming()
+                    || player.isVisuallyCrawling()
+                    || player.isUnderWater()
+                    || player.isFallFlying()
+                    || player.isSleeping())){
             nbt.putInt(COYOTETIME_TIME_OFF_GROUND_KEY, 0);
             nbt.putBoolean(COYOTETIME_JUMPED_KEY, false);
-        } else {
-            if(event.phase == TickEvent.Phase.END)
-                nbt.putInt(COYOTETIME_TIME_OFF_GROUND_KEY, nbt.getInt(COYOTETIME_TIME_OFF_GROUND_KEY) + 1);
+        } else if(event.phase == TickEvent.Phase.END) {
+            nbt.putInt(COYOTETIME_TIME_OFF_GROUND_KEY, nbt.getInt(COYOTETIME_TIME_OFF_GROUND_KEY) + 1);
         }
 
-        if (player.isAlive() &&
-                ((player.onGround && !player.isElytraFlying())
-                        || player.isSwimming()
-                        || player.isActualySwimming()
-                        || player.isSleeping())){
+        if (!player.isAlive()) return;
+        if ((player.isOnGround() && !player.isFallFlying())
+                || player.isSwimming()
+                || player.isVisuallySwimming()
+                || player.isVisuallyCrawling()
+                || player.isUnderWater()
+                || player.isFallFlying()
+                || player.isSleeping()){
             int jumps = nbt.getInt(MULTIJUMP_JUMPS_NBT_KEY);
 
             MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.Reset(player));
@@ -62,10 +70,10 @@ public class MidairJumpHandler {
     /** Detect when the player jumps to make sure he can't use the coyote jump until they land */
     @SubscribeEvent
     public static void livingJump(LivingEvent.LivingJumpEvent event){
-        if(!(event.getEntity() instanceof PlayerEntity)) return;
-        PlayerEntity player = (PlayerEntity)event.getEntity();
+        if(!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
 
-        CompoundNBT nbt = getNBT(player);
+        CompoundTag nbt = getNBT(player);
         nbt.putBoolean(COYOTETIME_JUMPED_KEY, true);
     }
 
@@ -76,24 +84,28 @@ public class MidairJumpHandler {
     }
 
     /** when the player presses the jump on the client side */
-    public static void playerJumpPacket(PlayerEntity player){
+    public static void playerJumpPacket(Player player){
         attemptPlayerJump(player, LogicalSide.SERVER);
     }
 
-    public static void attemptPlayerJump(PlayerEntity player, LogicalSide side){
-        if (player.isAlive() &&
-                player.jumpTicks != 10 &&
-                !player.onGround &&
-                !player.isElytraFlying() &&
-                !player.isSwimming() &&
-                !player.isActualySwimming() &&
-                !player.isSleeping()) {
-            CompoundNBT nbt = getNBT(player);
+    public static void attemptPlayerJump(Player player, LogicalSide side){
+        System.out.println("jump attempt pre");
+        if (!player.isAlive()) return;
+        if (!(player.isSwimming()
+                || player.isVisuallySwimming()
+                || player.isVisuallyCrawling()
+                || player.isUnderWater()
+                || player.isFallFlying()
+                || player.isSleeping())) {
+            CompoundTag nbt = getNBT(player);
+            System.out.println("jump attempt");
 
-            if (player.getMotion().y < 0 && !nbt.getBoolean(COYOTETIME_JUMPED_KEY)){
+            if (player.getDeltaMovement().y < 0 && !nbt.getBoolean(COYOTETIME_JUMPED_KEY)){
                 int timeOffGround = nbt.getInt(COYOTETIME_TIME_OFF_GROUND_KEY);
 
-                MidairJumpEvent.SetCoyoteTime event = new MidairJumpEvent.SetCoyoteTime(player, 0);
+                System.out.println("coyote");
+
+                MidairJumpEvent.SetCoyoteTime event = new MidairJumpEvent.SetCoyoteTime(player, 15);
                 MinecraftForge.EVENT_BUS.post(event);
                 if (timeOffGround <= event.getCoyoteTime()) {
 
@@ -113,11 +125,16 @@ public class MidairJumpHandler {
                 return;
             }
 
-            MidairJumpEvent.SetMultiJumpCount setMultiJumpCountEvent = new MidairJumpEvent.SetMultiJumpCount(player);
+            MidairJumpEvent.SetMultiJumpCount setMultiJumpCountEvent = new MidairJumpEvent.SetMultiJumpCount(player, 3);
             int jumps = nbt.getInt(MULTIJUMP_JUMPS_NBT_KEY);
+
+            System.out.println("multijump attempt");
 
             if (!MinecraftForge.EVENT_BUS.post(setMultiJumpCountEvent) && jumps < setMultiJumpCountEvent.getJumps()) {
                 if (!MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.MultiJump.Pre(player))){
+
+                    System.out.println("multijump perform");
+
                     MidairJumpHandler.performJump(player, side);
                     nbt.putInt(MULTIJUMP_JUMPS_NBT_KEY, jumps + 1);
                     MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.MultiJump.Post(player));
@@ -126,8 +143,8 @@ public class MidairJumpHandler {
         }
     }
 
-    public static void performJump(PlayerEntity player, LogicalSide side){
+    public static void performJump(Player player, LogicalSide side){
         if(side==LogicalSide.CLIENT) PacketHandler.INSTANCE.sendToServer(new MidairJumpPacket());
-        player.jump();
+        player.jumpFromGround();
     }
 }

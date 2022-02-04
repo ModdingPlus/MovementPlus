@@ -1,28 +1,27 @@
 package dev.necro.coyotelib.common.movement.midair_jump;
 
 import dev.necro.coyotelib.common.network.BasePacket;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.network.NetworkEvent;
 
-import java.io.IOException;
 import java.util.function.Supplier;
 
 public class MidairJumpPacket extends BasePacket<MidairJumpPacket> {
 
     public MidairJumpPacket() {super();}
-    public MidairJumpPacket(PacketBuffer packetBuffer) {super(packetBuffer);}
+    public MidairJumpPacket(FriendlyByteBuf packetBuffer) {super(packetBuffer);}
 
     @Override
-    public void readPacketData(PacketBuffer buf) {}
+    public void readPacketData(FriendlyByteBuf buf) {}
 
     @Override
-    public void writePacketData(PacketBuffer buf) {}
+    public void writePacketData(FriendlyByteBuf buf) {}
 
     @Override
     public void processPacket(Supplier<NetworkEvent.Context> ctx) {
         NetworkEvent.Context context = ctx.get();
-        PlayerEntity player = context.getSender();
+        Player player = context.getSender();
         if (player != null){
             context.enqueueWork(()-> MidairJumpHandler.playerJumpPacket(player));
         }

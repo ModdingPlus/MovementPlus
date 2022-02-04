@@ -1,14 +1,14 @@
-package dev.necro.coyotelib.api.common.movement.midair_jump;
+package dev.necro.coyotelib.common.movement.midair_jump;
 
-import jdk.internal.jline.internal.Nullable;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public abstract class MidairJumpEvent extends PlayerEvent{
-    public MidairJumpEvent(PlayerEntity player) {
+    public MidairJumpEvent(Player player) {
         super(player);
     }
 
@@ -16,7 +16,12 @@ public abstract class MidairJumpEvent extends PlayerEvent{
 
         private int coyoteTime;
 
-        public SetCoyoteTime(PlayerEntity player, int initialValue) {
+        public SetCoyoteTime(Player player) {
+            this(player, 0);
+        }
+
+
+        public SetCoyoteTime(Player player, int initialValue) {
             super(player);
             this.coyoteTime = initialValue;
         }
@@ -39,7 +44,7 @@ public abstract class MidairJumpEvent extends PlayerEvent{
     }
 
     public static abstract class CoyoteTimeJump extends MidairJumpEvent {
-        public CoyoteTimeJump(PlayerEntity player) {
+        public CoyoteTimeJump(Player player) {
             super(player);
         }
 
@@ -47,7 +52,7 @@ public abstract class MidairJumpEvent extends PlayerEvent{
         public static class Pre extends SpecialJump {
             private boolean jump;
 
-            public Pre(PlayerEntity player) {
+            public Pre(Player player) {
                 super(player);
             }
 
@@ -60,7 +65,7 @@ public abstract class MidairJumpEvent extends PlayerEvent{
         public static class Post extends SpecialJump {
             private boolean _isHandled;
 
-            public Post(PlayerEntity player) {
+            public Post(Player player) {
                 super(player);
             }
 
@@ -80,9 +85,9 @@ public abstract class MidairJumpEvent extends PlayerEvent{
 
     public static class SpecialJump extends MidairJumpEvent {
         private boolean _jump;
-        private Consumer<PlayerEntity> _callback;
+        private Consumer<Player> _callback;
 
-        public SpecialJump(PlayerEntity player) {
+        public SpecialJump(Player player) {
             super(player);
         }
 
@@ -94,7 +99,7 @@ public abstract class MidairJumpEvent extends PlayerEvent{
             return this._jump;
         }
 
-        public void setCallback(Consumer<PlayerEntity> callback){
+        public void setCallback(Consumer<Player> callback){
             this._callback = callback;
         }
 
@@ -103,7 +108,7 @@ public abstract class MidairJumpEvent extends PlayerEvent{
         }
 
         @Nullable
-        public Consumer<PlayerEntity> getCallback(){
+        public Consumer<Player> getCallback(){
             return this._callback;
         }
 
@@ -117,8 +122,13 @@ public abstract class MidairJumpEvent extends PlayerEvent{
     public static class SetMultiJumpCount extends MidairJumpEvent {
         private int jumps;
 
-        public SetMultiJumpCount(PlayerEntity player) {
+        public SetMultiJumpCount(Player player) {
+            this(player, 0);
+        }
+
+        public SetMultiJumpCount(Player player, int initialValue) {
             super(player);
+            this.jumps = initialValue;
         }
 
         public int addJumps(int count) {
@@ -144,13 +154,13 @@ public abstract class MidairJumpEvent extends PlayerEvent{
     }
 
     public static abstract class MultiJump extends MidairJumpEvent {
-        public MultiJump(PlayerEntity player) {
+        public MultiJump(Player player) {
             super(player);
         }
 
         @Cancelable
         public static class Pre extends MultiJump {
-            public Pre(PlayerEntity player) {
+            public Pre(Player player) {
                 super(player);
             }
 
@@ -163,7 +173,7 @@ public abstract class MidairJumpEvent extends PlayerEvent{
         public static class Post extends MultiJump {
             private boolean _isHandled;
 
-            public Post(PlayerEntity player) {
+            public Post(Player player) {
                 super(player);
             }
 
@@ -185,7 +195,7 @@ public abstract class MidairJumpEvent extends PlayerEvent{
      * Fired whenever a players midair jump count would reset, usually when the player is on the ground.
      */
     public static class Reset extends MidairJumpEvent {
-        public Reset(PlayerEntity player) {
+        public Reset(Player player) {
             super(player);
         }
     }
