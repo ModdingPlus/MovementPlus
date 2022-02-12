@@ -1,28 +1,33 @@
-# CoyoteLib
+![# Movement Plus](docs/logo.png)
+
+![Requires Minecraft Forge](docs/forge_badge.png)
 
 ## About
 
-CoyoteLib is a library mod providing things like a double jump and coyote time API that my future mods will tap into. It also provides a customizable debug overlay (Work in Progress) and custom gamerules.
+Movement Plus is a mod that adds a couple of additional movement options, primarily midair jumps and coyote time. All of this mods features can be configured to fit your preferences.
 
-At the time of writing the only custom gamerule is coyotelib:preventCreeperGriefing which prevents creeper griefing even when mob griefing is enabled.
+Features:
 
-There is a maven repository avaiable at https://maven.necro.dev providing source, api and deobfJars for development.
+* Adjust player jump height
+* Multi Jumps
+* Coyote Time
+* Adjustable Step Height
+* ... more to come!
 
-## Development
+Most of these features are disabled by default must be enabled in the server config. The server config can be found the world save folder.
+I recommend using Configured if you would like to have a nice interface for configuring this mod's settings.
 
-Add the maven repository:
-```groovy
-repositories {
-    [...]
-    maven { url = 'https://maven.necro.dev/' }
-}
-```
-Add CoyoteLib as a dependency:
-```groovy
-dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.x.x'
+## What is Coyote Time
 
-    [...]
-    compile fg.deobf('dev.necro.coyotelib:CoyoteLib:1.1.0:dev')
-}
-```
+Coyote time is a short time frame during which the player can jump even if they technically already ran of the edge of the black. It's a small grace period if you mess up your jump so to say.
+
+But it's also useful if you try to go down stairs and jump off them or situations like that where vanilla Minecraft's jump mechanics are usually a pain in the bun.
+
+The default length of coyote time in this mod is 3 ticks or a bit more than a tenth of a second. So it's there but shouldn't be too noticeable.
+
+## Planned Features
+
+* Adjustable base movement speed
+* Adjustable base swimming speed
+* Sharking
+* Dashing + Dodging

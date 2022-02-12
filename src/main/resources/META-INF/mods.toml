@@ -1,30 +1,30 @@
 modLoader="javafml"
-loaderVersion="[31,)"
-issueTrackerURL="https://github.com/QbDesu/CoyoteLib/issues"
+loaderVersion="[35,)"
+issueTrackerURL="https://github.com/QbDesu/MovementPlus/issues"
 license="Unlicense"
 
 [[mods]]
-modId="coyotelib"
+modId="movement_plus"
 version="${file.jarVersion}"
-displayName="CoyoteLib"
-updateJSONURL="https://gist.githubusercontent.com/QbDesu/22a14ea04a63b0b1fe1484c46fb6786a/raw/coyotelib_update.json"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/coyotelib"
-logoFile="coyotelib.png"
+displayName="Movement Plus"
+updateJSONURL="https://gist.githubusercontent.com/QbDesu/22a14ea04a63b0b1fe1484c46fb6786a/raw/movement_plus_update.json"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/movement_plus"
+logoFile="movement_plus.png"
 credits="Thanks to the Forge Team, the Forge Discord Channel, and the MMD Discord Channel."
 
 authors="Qb"
 description='''
-A library mod providing things like a double jump and coyote time API that for mods to tap into. It also provides a customizable debug overlay and custom gamerules.
+A mod that allows for configurable movement such as midair jumps.
 '''
 
-[[dependencies.coyotelib]]
+[[dependencies.movement_plus]]
 modId="forge"
 mandatory=true
 versionRange="[35,)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.coyotelib]]
+[[dependencies.movement_plus]]
 modId="minecraft"
 mandatory=true
 versionRange="[1.18.1,1.19)"
