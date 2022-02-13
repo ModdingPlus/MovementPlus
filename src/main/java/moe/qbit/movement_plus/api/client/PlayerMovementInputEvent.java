@@ -5,9 +5,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class PlayerMovementInputEvent extends PlayerEvent {
 
-    private static boolean wasSneaking = false;
-    private static boolean wasJumping = false;
-
     public PlayerMovementInputEvent(Player player) {
         super(player);
     }

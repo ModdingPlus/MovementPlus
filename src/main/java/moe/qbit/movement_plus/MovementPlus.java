@@ -13,6 +13,6 @@ public class MovementPlus
     public static CommonProxy proxy;
 
     public MovementPlus() {
-        MovementPlus.proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+        MovementPlus.proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
     }
 }
