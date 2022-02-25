@@ -3,6 +3,7 @@ package moe.qbit.movement_plus.common.jump_height;
 import moe.qbit.movement_plus.MovementPlus;
 import moe.qbit.movement_plus.common.config.ServerConfig;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingEvent;

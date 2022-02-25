@@ -40,11 +40,11 @@ public class ServerConfig
         {
             builder.push("general");
             multiJumps = builder
-                    .comment("The base amount of midair jumps every player has.")
+                    .comment("The base amount of midair jumps every player has. This is summed with the amount of multi-jumps provided by equipment.")
                     .translation("text."+ MovementPlus.MODID+".config.multiJumps")
                     .defineInRange("multiJumps", 0, 0, 1024);
             coyoteTime = builder
-                    .comment("The base coyote time every player has in ticks.")
+                    .comment("The base coyote time every player has in ticks.  This is summed with the duration of coyote time provided by equipment.")
                     .translation("text."+ MovementPlus.MODID+".config.coyoteTime")
                     .defineInRange("coyoteTime", 3, 0, 65536);
             stepHeight = builder

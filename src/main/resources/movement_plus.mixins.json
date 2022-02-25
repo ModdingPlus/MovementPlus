@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "moe.qbit.movement_plus.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "movement_plus.refmap.json",
+  "mixins": [
+    "LivingEntityMixin"
+  ],
+  "client": [
+  ],
+  "minVersion": "0.8"
+}

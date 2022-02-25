@@ -4,6 +4,7 @@ import moe.qbit.movement_plus.MovementPlus;
 import moe.qbit.movement_plus.api.common.midair_jump.MidairJumpEvent;
 import moe.qbit.movement_plus.api.client.PlayerMovementInputEvent;
 import moe.qbit.movement_plus.common.ModSounds;
+import moe.qbit.movement_plus.common.attributes.ModAttributes;
 import moe.qbit.movement_plus.common.config.ServerConfig;
 import moe.qbit.movement_plus.common.network.PacketHandler;
 import net.minecraft.core.particles.ParticleTypes;
@@ -111,7 +112,7 @@ public class MidairJumpHandler {
             CompoundTag nbt = getNBT(player);
 
             if (player.getDeltaMovement().y < 0 && !nbt.getBoolean(COYOTETIME_JUMPED_KEY)){
-                int baseCoyoteTime = ServerConfig.coyoteTime;
+                int baseCoyoteTime = (int) Math.floor(player.getAttributeValue(ModAttributes.COYOTE_TIME.get()) + ServerConfig.coyoteTime);
                 MidairJumpEvent.CoyoteTime.SetCoyoteTime event = new MidairJumpEvent.CoyoteTime.SetCoyoteTime(player, baseCoyoteTime);
                 if(!MinecraftForge.EVENT_BUS.post(event) && event.getCoyoteTime()>0) {
 
@@ -129,7 +130,7 @@ public class MidairJumpHandler {
                 }
             }
 
-            int baseMultiJumps = ServerConfig.multiJumps;
+            int baseMultiJumps = (int) Math.floor(player.getAttributeValue(ModAttributes.MULTI_JUMPS.get()) + ServerConfig.multiJumps);
             MidairJumpEvent.MultiJump.SetMultiJumpCount setMultiJumpCountEvent = new MidairJumpEvent.MultiJump.SetMultiJumpCount(player, baseMultiJumps);
             int jumps = nbt.getInt(MULTIJUMP_JUMPS_NBT_KEY);
 
