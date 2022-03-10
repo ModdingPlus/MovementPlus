@@ -24,7 +24,10 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
 
-    @SuppressWarnings("OverwriteAuthorRequired")
+    /**
+     * @author Movement Plus
+     * @reason Make jump power based on an attribute.
+     */
     @Overwrite
     protected float getJumpPower() {
         return (float) (this.getAttributeValue(ModAttributes.JUMP_HEIGHT.get()) * this.getBlockJumpFactor());

@@ -112,12 +112,11 @@ public class MidairJumpHandler {
             CompoundTag nbt = getNBT(player);
 
             if (player.getDeltaMovement().y < 0 && !nbt.getBoolean(COYOTETIME_JUMPED_KEY)){
-                int baseCoyoteTime = (int) Math.floor(player.getAttributeValue(ModAttributes.COYOTE_TIME.get()) + ServerConfig.coyoteTime);
-                MidairJumpEvent.CoyoteTime.SetCoyoteTime event = new MidairJumpEvent.CoyoteTime.SetCoyoteTime(player, baseCoyoteTime);
-                if(!MinecraftForge.EVENT_BUS.post(event) && event.getCoyoteTime()>0) {
+                int coyoteTime = (int) Math.floor(player.getAttributeValue(ModAttributes.COYOTE_TIME.get()) + ServerConfig.coyoteTime);
 
+                if (coyoteTime > 0) {
                     int timeOffGround = nbt.getInt(COYOTETIME_TIME_OFF_GROUND_KEY);
-                    if (timeOffGround <= event.getCoyoteTime()) {
+                    if (timeOffGround <= coyoteTime) {
 
                         if (!MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.CoyoteTime.Pre(player))) {
                             performJump(player, side);
@@ -130,19 +129,21 @@ public class MidairJumpHandler {
                 }
             }
 
-            int baseMultiJumps = (int) Math.floor(player.getAttributeValue(ModAttributes.MULTI_JUMPS.get()) + ServerConfig.multiJumps);
-            MidairJumpEvent.MultiJump.SetMultiJumpCount setMultiJumpCountEvent = new MidairJumpEvent.MultiJump.SetMultiJumpCount(player, baseMultiJumps);
-            int jumps = nbt.getInt(MULTIJUMP_JUMPS_NBT_KEY);
+            int multiJumps = (int) Math.floor(player.getAttributeValue(ModAttributes.MULTI_JUMPS.get()) + ServerConfig.multiJumps);
 
-            if (!MinecraftForge.EVENT_BUS.post(setMultiJumpCountEvent) && jumps < setMultiJumpCountEvent.getJumps()) {
-                if (!MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.MultiJump.Pre(player))){
-                    nbt.putInt(MULTIJUMP_JUMPS_NBT_KEY, jumps + 1);
-                    performJump(player, side);
+            if (multiJumps > 0) {
+                int usedJumps = nbt.getInt(MULTIJUMP_JUMPS_NBT_KEY);
 
-                    MidairJumpEvent.MultiJump.Post postMultiJumpEvent = new MidairJumpEvent.MultiJump.Post(player);
-                    MinecraftForge.EVENT_BUS.post(postMultiJumpEvent);
-                    if (postMultiJumpEvent.shouldPlayEffects()) playMultiJumpEffects(player);
-                    return;
+                if (usedJumps < multiJumps) {
+                    if (!MinecraftForge.EVENT_BUS.post(new MidairJumpEvent.MultiJump.Pre(player))) {
+                        nbt.putInt(MULTIJUMP_JUMPS_NBT_KEY, usedJumps + 1);
+                        performJump(player, side);
+
+                        MidairJumpEvent.MultiJump.Post postMultiJumpEvent = new MidairJumpEvent.MultiJump.Post(player);
+                        MinecraftForge.EVENT_BUS.post(postMultiJumpEvent);
+                        if (postMultiJumpEvent.shouldPlayEffects()) playMultiJumpEffects(player);
+                        return;
+                    }
                 }
             }
 
@@ -163,7 +164,7 @@ public class MidairJumpHandler {
         Level level = player.level;
         if(!level.isClientSide() && level instanceof ServerLevel serverLevel){
             serverLevel.sendParticles(ParticleTypes.CLOUD, player.getX(), player.getY(), player.getZ(), 1, 0, 0, 0, 0);
-            serverLevel.playSound(null, player, ModSounds.JUMP, SoundSource.PLAYERS, .5f, 1.8f);
+            serverLevel.playSound(null, player, ModSounds.JUMP, SoundSource.PLAYERS, .8f, 1.8f);
         }
     }
 

@@ -20,43 +20,6 @@ public abstract class MidairJumpEvent extends PlayerEvent {
         }
 
         @Cancelable
-        public static class SetCoyoteTime extends CoyoteTime {
-
-            private int coyoteTime;
-
-            public SetCoyoteTime(Player player) {
-                this(player, 0);
-            }
-
-
-            public SetCoyoteTime(Player player, int initialValue) {
-                super(player);
-                this.coyoteTime = initialValue;
-            }
-
-            public void addCoyoteTime(int ticks) {
-                this.coyoteTime += ticks;
-            }
-
-            public int getCoyoteTime() {
-                return coyoteTime;
-            }
-
-            public void setCoyoteTime(int ticks) {
-                this.coyoteTime = ticks;
-            }
-
-            public void maximizeCoyoteTime(int ticks) {
-                this.coyoteTime = Math.max(this.coyoteTime, ticks);
-            }
-
-            @Override
-            public boolean isCancelable() {
-                return true;
-            }
-        }
-
-        @Cancelable
         public static class Pre extends CoyoteTime {
 
             public Pre(Player player) {
@@ -115,41 +78,6 @@ public abstract class MidairJumpEvent extends PlayerEvent {
     public static abstract class MultiJump extends MidairJumpEvent {
         public MultiJump(Player player) {
             super(player);
-        }
-
-        @Cancelable
-        public static class SetMultiJumpCount extends MultiJump {
-            private int jumps;
-
-            public SetMultiJumpCount(Player player) {
-                this(player, 0);
-            }
-
-            public SetMultiJumpCount(Player player, int initialValue) {
-                super(player);
-                this.jumps = initialValue;
-            }
-
-            public int addJumps(int count) {
-                return jumps += count;
-            }
-
-            public int getJumps() {
-                return jumps;
-            }
-
-            public void setJumps(int count) {
-                this.jumps = count;
-            }
-
-            public void maximizeJumps(int count) {
-                this.jumps = Math.max(this.jumps, count);
-            }
-
-            @Override
-            public boolean isCancelable() {
-                return true;
-            }
         }
 
         @Cancelable
