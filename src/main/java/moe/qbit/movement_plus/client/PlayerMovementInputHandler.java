@@ -18,7 +18,7 @@ public class PlayerMovementInputHandler {
 
     @SubscribeEvent
     public static void movementInputUpdate(MovementInputUpdateEvent event){
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         Input input = event.getInput();
 
         if(!wasJumping && input.jumping){

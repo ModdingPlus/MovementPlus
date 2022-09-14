@@ -11,7 +11,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -92,7 +91,7 @@ public class MidairJumpHandler {
     /** when the player presses the jump on the client side */
     @SubscribeEvent
     public static void playerJumpInput(PlayerMovementInputEvent.JumpInputEvent event){
-        attemptPlayerJump(event.getPlayer(), LogicalSide.CLIENT);
+        attemptPlayerJump(event.getEntity(), LogicalSide.CLIENT);
     }
 
     /** when the player presses the jump on the client side */
@@ -162,16 +161,18 @@ public class MidairJumpHandler {
 
     public static void playMultiJumpEffects(Player player){
         Level level = player.level;
+
+        player.playSound(ModSounds.MIDAIR_JUMP.get(), .6f, 1.8f);
+
         if(!level.isClientSide() && level instanceof ServerLevel serverLevel){
             serverLevel.sendParticles(ParticleTypes.CLOUD, player.getX(), player.getY(), player.getZ(), 1, 0, 0, 0, 0);
-            serverLevel.playSound(null, player, ModSounds.JUMP, SoundSource.PLAYERS, .8f, 1.8f);
         }
     }
 
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void playerFall(LivingFallEvent event) {
-        LivingEntity entity = event.getEntityLiving();
+        LivingEntity entity = event.getEntity();
 
         if (!(entity instanceof Player)) return;
         CompoundTag nbt = getNBT(entity);

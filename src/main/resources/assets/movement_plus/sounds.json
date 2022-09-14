@@ -1,5 +1,5 @@
 {
-  "entity.player.jump": {
+  "midair_jump": {
     "sounds":[
       "step/grass1",
       "step/grass2",
@@ -8,6 +8,6 @@
       "step/grass5",
       "step/grass6"
     ],
-    "subtitle": "subtitles.movement_plus.entity.player.jump"
+    "subtitle": "subtitles.movement_plus.midair_jump"
   }
 }

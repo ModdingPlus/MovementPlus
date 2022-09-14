@@ -20,7 +20,8 @@ public class CommonProxy {
     
     public void registerListeners(IEventBus modEventBus){
         modEventBus.addListener(this::setup);
-        ModAttributes.register(modEventBus);
+        ModAttributes.register(modEventBus);;
+        ModSounds.register(modEventBus);
     }
 
     public void setup(final FMLCommonSetupEvent event) {}

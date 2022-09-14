@@ -1,5 +1,5 @@
 {
-  "subtitles.movement_plus.entity.player.jump": "Midair Jump",
+  "subtitles.movement_plus.midair_jump": "Midair Jump",
   "attribute.name.generic.movement_plus.jump_height": "Jump Height",
   "attribute.name.player.movement_plus.multi_jumps": "Midair Jumps",
   "attribute.name.player.movement_plus.coyote_time": "Coyote Time"
