@@ -17,7 +17,7 @@ public class JumpHeightHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void playerJump(LivingEvent.LivingJumpEvent event) {
-        LivingEntity entity = event.getEntityLiving();
+        LivingEntity entity = event.getEntity();
 
         if (!(entity instanceof Player)) return;
         if (ServerConfig.jumpHeightBoost == 0.0d) return;
@@ -27,9 +27,9 @@ public class JumpHeightHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void playerFall(LivingFallEvent event) {
-        LivingEntity entity = event.getEntityLiving();
+        LivingEntity entity = event.getEntity();
 
         if (!(entity instanceof Player)) return;
-        event.setDistance((float) Math.max(0, event.getDistance() - ServerConfig.jumpHeightBoost));
+        event.setDistance((float) Math.max(0d, event.getDistance() - Math.max(ServerConfig.jumpHeightBoost, 0d)));
     }
 }

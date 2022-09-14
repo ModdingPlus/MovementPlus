@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[35,)"
+loaderVersion="[43,)"
 issueTrackerURL="https://github.com/QbDesu/MovementPlus/issues"
 license="Unlicense"
 
@@ -20,13 +20,13 @@ A mod that allows for configurable movement such as midair jumps.
 [[dependencies.movement_plus]]
 modId="forge"
 mandatory=true
-versionRange="[35,)"
+versionRange="[43,)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.movement_plus]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.18.1,1.19)"
+versionRange="[1.19.2,1.20)"
 ordering="NONE"
 side="BOTH"
