@@ -25,5 +25,3 @@ run
 forge*changelog.txt
 
 mcmodsrepo
-# vscode (loom-generated launch configs contain machine-specific paths)
-.vscode

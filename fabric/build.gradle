@@ -52,3 +52,16 @@ shadowJar {
 remapJar {
     inputFile.set shadowJar.archiveFile
 }
+
+// Fixed debug ports so the VS Code attach configs can find their instance
+// when launching via `--debug-jvm`; see .vscode/tasks.json.
+tasks.named('runClient') {
+    debugOptions {
+        port = 5005
+    }
+}
+tasks.named('runServer') {
+    debugOptions {
+        port = 5006
+    }
+}
