@@ -1,17 +1,18 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+issueTrackerURL = "https://github.com/ModdingPlus/MovementPlus/issues"
+license = "Unlicense"
 
 [[mods]]
 modId = "movement_plus"
 version = "${version}"
 displayName = "Movement Plus"
-authors = "Me!"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/movement_plus"
+authors = "Qb"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+A mod that allows for configurable movement such as midair jumps.
 '''
-#logoFile = ""
+logoFile = "assets/movement_plus/icon.png"
 
 [[dependencies.movement_plus]]
 modId = "neoforge"

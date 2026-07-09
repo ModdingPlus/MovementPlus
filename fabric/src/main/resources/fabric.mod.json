@@ -3,23 +3,24 @@
   "id": "movement_plus",
   "version": "${version}",
   "name": "Movement Plus",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "A mod that allows for configurable movement such as midair jumps.",
   "authors": [
-    "Me!"
+    "Qb"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/movement_plus",
+    "sources": "https://github.com/ModdingPlus/MovementPlus",
+    "issues": "https://github.com/ModdingPlus/MovementPlus/issues"
   },
-  "license": "CC0-1.0",
+  "license": "Unlicense",
   "icon": "assets/movement_plus/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "moe.qbyte.movement_plus.fabric.ExampleModFabric"
+      "moe.qbyte.movement_plus.fabric.MovementPlusFabric"
     ],
     "client": [
-      "moe.qbyte.movement_plus.fabric.client.ExampleModFabricClient"
+      "moe.qbyte.movement_plus.fabric.client.MovementPlusFabricClient"
     ]
   },
   "mixins": [
@@ -30,9 +31,7 @@
     "minecraft": "~1.21.1",
     "java": ">=21",
     "architectury": ">=13.0.8",
-    "fabric-api": "*"
-  },
-  "suggests": {
-    "another-mod": "*"
+    "fabric-api": "*",
+    "forgeconfigapiport": ">=21.1.0"
   }
 }
