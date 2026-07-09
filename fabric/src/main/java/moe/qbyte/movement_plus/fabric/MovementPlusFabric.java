@@ -34,6 +34,7 @@ public final class MovementPlusFabric implements ModInitializer {
         // must run after MovementPlus.init() has registered the attributes.
         FabricDefaultAttributeRegistry.register(EntityType.PLAYER, Player.createAttributes()
                 .add(ModAttributes.MULTI_JUMPS.holder())
-                .add(ModAttributes.COYOTE_TIME.holder()));
+                .add(ModAttributes.COYOTE_TIME.holder())
+                .add(ModAttributes.SWIM_SPEED.holder()));
     }
 }

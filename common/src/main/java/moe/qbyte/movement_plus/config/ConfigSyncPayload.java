@@ -14,7 +14,8 @@ import net.minecraft.server.level.ServerPlayer;
  * so the client can predict midair jumps with the same values the server validates with.
  */
 public record ConfigSyncPayload(int multiJumps, int coyoteTime, double stepHeight,
-                                double stepHeightSneaking, double jumpHeightBoost)
+                                double stepHeightSneaking, double jumpHeightBoost,
+                                double movementSpeedMultiplier, double swimSpeedMultiplier)
         implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<ConfigSyncPayload> TYPE =
@@ -27,13 +28,17 @@ public record ConfigSyncPayload(int multiJumps, int coyoteTime, double stepHeigh
                 buf.writeDouble(payload.stepHeight);
                 buf.writeDouble(payload.stepHeightSneaking);
                 buf.writeDouble(payload.jumpHeightBoost);
+                buf.writeDouble(payload.movementSpeedMultiplier);
+                buf.writeDouble(payload.swimSpeedMultiplier);
             },
             buf -> new ConfigSyncPayload(buf.readVarInt(), buf.readVarInt(),
-                    buf.readDouble(), buf.readDouble(), buf.readDouble()));
+                    buf.readDouble(), buf.readDouble(), buf.readDouble(),
+                    buf.readDouble(), buf.readDouble()));
 
     public static ConfigSyncPayload fromCurrentValues() {
         return new ConfigSyncPayload(ServerConfig.multiJumps, ServerConfig.coyoteTime,
-                ServerConfig.stepHeight, ServerConfig.stepHeightSneaking, ServerConfig.jumpHeightBoost);
+                ServerConfig.stepHeight, ServerConfig.stepHeightSneaking, ServerConfig.jumpHeightBoost,
+                ServerConfig.movementSpeedMultiplier, ServerConfig.swimSpeedMultiplier);
     }
 
     public static void sendTo(ServerPlayer player) {
@@ -57,6 +62,8 @@ public record ConfigSyncPayload(int multiJumps, int coyoteTime, double stepHeigh
         ServerConfig.stepHeight = this.stepHeight;
         ServerConfig.stepHeightSneaking = this.stepHeightSneaking;
         ServerConfig.jumpHeightBoost = this.jumpHeightBoost;
+        ServerConfig.movementSpeedMultiplier = this.movementSpeedMultiplier;
+        ServerConfig.swimSpeedMultiplier = this.swimSpeedMultiplier;
     }
 
     @Override

@@ -4,6 +4,7 @@ import dev.architectury.event.events.common.PlayerEvent;
 import moe.qbyte.movement_plus.config.ConfigSyncPayload;
 import moe.qbyte.movement_plus.jump_height.JumpHeightHandler;
 import moe.qbyte.movement_plus.midair_jump.MidairJumpHandler;
+import moe.qbyte.movement_plus.movement_speed.MovementSpeedHandler;
 import moe.qbyte.movement_plus.network.ModNetwork;
 import moe.qbyte.movement_plus.registry.ModAttributes;
 import moe.qbyte.movement_plus.registry.ModSounds;
@@ -27,6 +28,7 @@ public final class MovementPlus {
 
         MidairJumpHandler.init();
         StepHeightHandler.init();
+        MovementSpeedHandler.init();
 
         // Sync the server config values to each client on join; needed for client-side jump prediction.
         PlayerEvent.PLAYER_JOIN.register(ConfigSyncPayload::sendTo);

@@ -27,6 +27,8 @@ public final class ServerConfig {
     public static double stepHeight = 0.6d;
     public static double stepHeightSneaking = 0.6d;
     public static double jumpHeightBoost = 0d;
+    public static double movementSpeedMultiplier = 1d;
+    public static double swimSpeedMultiplier = 1d;
 
     private ServerConfig() {}
 
@@ -37,6 +39,8 @@ public final class ServerConfig {
         stepHeight = SERVER.stepHeight.get();
         stepHeightSneaking = SERVER.stepHeightSneaking.get();
         jumpHeightBoost = SERVER.jumpHeightBoost.get();
+        movementSpeedMultiplier = SERVER.movementSpeedMultiplier.get();
+        swimSpeedMultiplier = SERVER.swimSpeedMultiplier.get();
     }
 
     public static class ServerConfigTemplate {
@@ -45,6 +49,8 @@ public final class ServerConfig {
         public final ModConfigSpec.DoubleValue stepHeight;
         public final ModConfigSpec.DoubleValue stepHeightSneaking;
         public final ModConfigSpec.DoubleValue jumpHeightBoost;
+        public final ModConfigSpec.DoubleValue movementSpeedMultiplier;
+        public final ModConfigSpec.DoubleValue swimSpeedMultiplier;
 
         ServerConfigTemplate(ModConfigSpec.Builder builder) {
             builder.push("general");
@@ -68,6 +74,14 @@ public final class ServerConfig {
                     .comment("Additional base jump height in equivalent levels of the jump boost potion effect. Negative values possible.")
                     .translation("text." + MovementPlus.MOD_ID + ".config.jumpHeightBoost")
                     .defineInRange("jumpHeightBoost", 0.0d, -128d, 127d);
+            movementSpeedMultiplier = builder
+                    .comment("Multiplier on the base walking speed of every player.")
+                    .translation("text." + MovementPlus.MOD_ID + ".config.movementSpeedMultiplier")
+                    .defineInRange("movementSpeedMultiplier", 1.0d, 0d, 64d);
+            swimSpeedMultiplier = builder
+                    .comment("Multiplier on the swimming speed of every player. This is multiplied with the swim speed multiplier provided by equipment.")
+                    .translation("text." + MovementPlus.MOD_ID + ".config.swimSpeedMultiplier")
+                    .defineInRange("swimSpeedMultiplier", 1.0d, 0d, 64d);
             builder.pop();
         }
     }

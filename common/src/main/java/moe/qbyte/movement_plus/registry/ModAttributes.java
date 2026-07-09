@@ -25,6 +25,8 @@ public final class ModAttributes {
             () -> new RangedAttribute("attribute.name.player.movement_plus.multi_jumps", 0d, 0d, 1024d).setSyncable(true));
     public static final Entry COYOTE_TIME = register("coyote_time",
             () -> new RangedAttribute("attribute.name.player.movement_plus.coyote_time", 0d, 0d, 4096d).setSyncable(true));
+    public static final Entry SWIM_SPEED = register("swim_speed",
+            () -> new RangedAttribute("attribute.name.player.movement_plus.swim_speed", 1d, 0d, 1024d).setSyncable(true));
 
     private ModAttributes() {}
 

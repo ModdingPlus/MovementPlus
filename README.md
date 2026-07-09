@@ -12,6 +12,8 @@ Features:
 * Multi Jumps
 * Coyote Time
 * Adjustable Step Height
+* Adjustable base movement speed
+* Adjustable swimming speed
 * ... more to come!
 
 Most of these features are disabled by default must be enabled in the server config. The server config can be found the world save folder.
@@ -27,7 +29,5 @@ The default length of coyote time in this mod is 3 ticks or a bit more than a te
 
 ## Planned Features
 
-* Adjustable base movement speed
-* Adjustable base swimming speed
 * Sharking
 * Dashing + Dodging

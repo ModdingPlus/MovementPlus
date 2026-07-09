@@ -34,6 +34,7 @@ public final class MovementPlusNeoForge {
     private void onEntityAttributeModification(EntityAttributeModificationEvent event) {
         event.add(EntityType.PLAYER, ModAttributes.MULTI_JUMPS.holder());
         event.add(EntityType.PLAYER, ModAttributes.COYOTE_TIME.holder());
+        event.add(EntityType.PLAYER, ModAttributes.SWIM_SPEED.holder());
     }
 
     private void onConfigLoading(ModConfigEvent.Loading event) {

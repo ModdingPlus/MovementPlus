@@ -4,6 +4,7 @@ import moe.qbyte.movement_plus.jump_height.JumpHeightHandler;
 import moe.qbyte.movement_plus.midair_jump.MidairJumpHandler;
 import moe.qbyte.movement_plus.midair_jump.MidairJumpState;
 import moe.qbyte.movement_plus.config.ServerConfig;
+import moe.qbyte.movement_plus.registry.ModAttributes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
@@ -16,6 +17,17 @@ public final class EntityHooks {
         if (!(entity instanceof Player player)) return;
         MidairJumpHandler.onJump(player);
         JumpHeightHandler.onJump(player);
+    }
+
+    /**
+     * Scales the water-movement acceleration in {@code travel} for players;
+     * cross-loader replacement for NeoForge's {@code swim_speed} attribute.
+     */
+    public static float scaleSwimSpeed(LivingEntity entity, float amount) {
+        if (!(entity instanceof Player player)) return amount;
+        return (float) (amount
+                * player.getAttributeValue(ModAttributes.SWIM_SPEED.holder())
+                * ServerConfig.swimSpeedMultiplier);
     }
 
     /** Adjusts the incoming fall distance in {@code causeFallDamage} for players. */
