@@ -22,7 +22,7 @@ public final class MidairJumpHandler {
      * Any state in which the player has "solid footing": midair jumps replenish and
      * midair jumping is not possible.
      */
-    private static boolean hasFooting(Player player) {
+    public static boolean hasFooting(Player player) {
         return player.onGround()
                 || player.isSwimming()
                 || player.isVisuallySwimming()

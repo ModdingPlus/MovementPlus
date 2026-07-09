@@ -10,10 +10,19 @@ import net.minecraft.client.player.LocalPlayer;
  */
 public final class PlayerMovementInputHandler {
     private static boolean wasJumping = false;
+    private static boolean hadFooting = true;
 
     private PlayerMovementInputHandler() {}
 
     public static void init() {
+        // The footing check must use the state from before the tick: a fresh press on the
+        // ground performs the vanilla jump during the tick, and by tick end the player already
+        // looks airborne, which would stack a midair jump onto the same press.
+        ClientTickEvent.CLIENT_PRE.register(minecraft -> {
+            LocalPlayer player = minecraft.player;
+            hadFooting = player == null || MidairJumpHandler.hasFooting(player);
+        });
+
         ClientTickEvent.CLIENT_POST.register(minecraft -> {
             LocalPlayer player = minecraft.player;
             if (player == null) {
@@ -22,7 +31,7 @@ public final class PlayerMovementInputHandler {
             }
 
             boolean jumping = player.input.jumping;
-            if (!wasJumping && jumping) {
+            if (!wasJumping && jumping && !hadFooting) {
                 MidairJumpHandler.attemptPlayerJump(player, true);
             }
             wasJumping = jumping;
