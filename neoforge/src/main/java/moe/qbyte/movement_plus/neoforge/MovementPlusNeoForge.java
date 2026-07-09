@@ -12,11 +12,16 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 
 @Mod(MovementPlus.MOD_ID)
 public final class MovementPlusNeoForge {
+    private final ModContainer container;
+
     public MovementPlusNeoForge(IEventBus modBus, ModContainer container) {
+        this.container = container;
         container.registerConfig(ModConfig.Type.SERVER, ServerConfig.SERVER_SPEC);
         modBus.addListener(this::onConfigLoading);
         modBus.addListener(this::onConfigReloading);
@@ -46,5 +51,8 @@ public final class MovementPlusNeoForge {
 
     private void onClientSetup(FMLClientSetupEvent event) {
         MovementPlusClient.init();
+
+        // NeoForge's built-in config screen, reachable from the mod list
+        this.container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 }

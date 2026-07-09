@@ -5,7 +5,7 @@ license = "Unlicense"
 
 [[mods]]
 modId = "movement_plus"
-version = "${version}"
+version = "2.0.0"
 displayName = "Movement Plus"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/movement_plus"
 authors = "Qb"
