@@ -12,7 +12,7 @@ authors = "Qb"
 description = '''
 A mod that allows for configurable movement such as midair jumps.
 '''
-logoFile = "assets/movement_plus/icon.png"
+logoFile = "assets/movement_plus/logo.png"
 
 [[dependencies.movement_plus]]
 modId = "neoforge"
