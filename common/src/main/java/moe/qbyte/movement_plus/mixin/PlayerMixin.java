@@ -1,15 +1,16 @@
 package moe.qbyte.movement_plus.mixin;
 
 import moe.qbyte.movement_plus.midair_jump.MidairJumpState;
-import moe.qbyte.movement_plus.registry.ModAttributes;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * Holds the transient midair jump state. The custom attributes are attached per loader:
+ * via {@code FabricDefaultAttributeRegistry} on Fabric and
+ * {@code EntityAttributeModificationEvent} on NeoForge, since default attribute suppliers
+ * may be built before mod init on Fabric (dev-time {@code Bootstrap.validate()}).
+ */
 @Mixin(Player.class)
 public abstract class PlayerMixin implements MidairJumpState {
 
@@ -19,14 +20,6 @@ public abstract class PlayerMixin implements MidairJumpState {
     private int movement_plus$timeOffGround;
     @Unique
     private boolean movement_plus$jumped;
-
-    // replaces Forge's EntityAttributeModificationEvent
-    @Inject(method = "createAttributes", at = @At("RETURN"))
-    private static void movement_plus$addAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
-        cir.getReturnValue()
-                .add(ModAttributes.MULTI_JUMPS.holder())
-                .add(ModAttributes.COYOTE_TIME.holder());
-    }
 
     @Override
     public int movement_plus$getUsedJumps() {
