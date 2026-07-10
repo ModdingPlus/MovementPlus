@@ -1,9 +1,9 @@
 package moe.qbyte.movement_plus;
 
+import moe.qbyte.movement_plus.config.ServerConfig;
 import moe.qbyte.movement_plus.jump_height.JumpHeightHandler;
 import moe.qbyte.movement_plus.midair_jump.MidairJumpHandler;
 import moe.qbyte.movement_plus.midair_jump.MidairJumpState;
-import moe.qbyte.movement_plus.config.ServerConfig;
 import moe.qbyte.movement_plus.registry.ModAttributes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +16,6 @@ public final class EntityHooks {
     public static void onLivingJump(LivingEntity entity) {
         if (!(entity instanceof Player player)) return;
         MidairJumpHandler.onJump(player);
-        JumpHeightHandler.onJump(player);
     }
 
     /**
@@ -30,15 +29,17 @@ public final class EntityHooks {
                 * ServerConfig.swimSpeedMultiplier);
     }
 
-    /** Adjusts the incoming fall distance in {@code causeFallDamage} for players. */
+    /**
+     * Adjusts the incoming fall distance in {@code causeFallDamage} for players.
+     * The jump power compensation lives on the safe fall distance attribute; this only
+     * covers midair jumps used since the last landing, which soften the fall like in 1.19.x.
+     */
     public static float modifyFallDistance(LivingEntity entity, float distance) {
         if (!(entity instanceof Player player)) return distance;
 
-        distance = JumpHeightHandler.modifyFallDistance(player, distance);
-
-        // Midair jumps used since last landing soften the fall like in 1.19.x.
         if (MidairJumpState.of(player).movement_plus$getUsedJumps() > 0) {
-            distance = (float) Math.max(0d, distance - ServerConfig.jumpHeightBoost / 1.5d - 1d);
+            double extraJumpHeight = JumpHeightHandler.extraJumpHeight(ServerConfig.jumpPowerMultiplier);
+            distance = (float) Math.max(0d, distance - extraJumpHeight / 1.5d - 1d);
         }
         return distance;
     }

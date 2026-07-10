@@ -1,27 +1,42 @@
 package moe.qbyte.movement_plus.jump_height;
 
+import dev.architectury.event.events.common.TickEvent;
+import moe.qbyte.movement_plus.MovementPlus;
+import moe.qbyte.movement_plus.common.AttributeMultipliers;
 import moe.qbyte.movement_plus.config.ServerConfig;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 
 /**
- * Applies the configured flat jump height boost. Jump height from equipment/effects is covered
- * by vanilla's {@code generic.jump_strength} attribute since 1.20.5, so unlike 1.19.x no mixin
- * into {@code getJumpPower()} is needed anymore.
+ * Applies the configured jump power multiplier through a modifier on vanilla's
+ * {@code generic.jump_strength} attribute (replaces the 1.19.x jump velocity hack),
+ * with the gained apex height compensated on {@code generic.safe_fall_distance}
+ * the same way the jump boost potion effect does it.
  */
 public final class JumpHeightHandler {
+    private static final ResourceLocation POWER_MODIFIER_ID = MovementPlus.id("jump_power_multiplier");
+    private static final ResourceLocation SAFE_FALL_MODIFIER_ID = MovementPlus.id("jump_power_safe_fall_bonus");
+
+    /** Apex height of an unmodified vanilla jump (power 0.42) in blocks. */
+    private static final double VANILLA_JUMP_HEIGHT = 1.25d;
+
     private JumpHeightHandler() {}
 
-    /** Called from LivingEntityMixin after a player jumped. */
-    public static void onJump(Player player) {
-        if (ServerConfig.jumpHeightBoost == 0.0d) return;
-        Vec3 motion = player.getDeltaMovement();
-        player.setDeltaMovement(motion.x,
-                Math.max(0, motion.y + (0.1d * ServerConfig.jumpHeightBoost)), motion.z);
+    public static void init() {
+        TickEvent.PLAYER_PRE.register(player -> {
+            double multiplier = ServerConfig.jumpPowerMultiplier;
+            AttributeMultipliers.apply(player, Attributes.JUMP_STRENGTH, POWER_MODIFIER_ID, multiplier);
+            AttributeMultipliers.applyFlat(player, Attributes.SAFE_FALL_DISTANCE, SAFE_FALL_MODIFIER_ID,
+                    extraJumpHeight(multiplier));
+        });
     }
 
-    /** Fall distance reduction matching the extra height gained from the jump boost. */
-    public static float modifyFallDistance(Player player, float distance) {
-        return (float) Math.max(0d, distance - Math.max(ServerConfig.jumpHeightBoost, 0d));
+    /**
+     * Estimated extra apex height in blocks gained from the jump power multiplier;
+     * jump height scales roughly quadratically with jump power. Never negative, so a
+     * reduced jump power doesn't cause earlier fall damage.
+     */
+    public static double extraJumpHeight(double multiplier) {
+        return Math.max(0d, VANILLA_JUMP_HEIGHT * (multiplier * multiplier - 1d));
     }
 }

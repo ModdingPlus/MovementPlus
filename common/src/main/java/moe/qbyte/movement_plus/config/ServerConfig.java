@@ -26,7 +26,7 @@ public final class ServerConfig {
     public static int coyoteTime = 3;
     public static double stepHeightMultiplier = 1d;
     public static double stepHeightSneakingMultiplier = 1d;
-    public static double jumpHeightBoost = 0d;
+    public static double jumpPowerMultiplier = 1d;
     public static double movementSpeedMultiplier = 1d;
     public static double swimSpeedMultiplier = 1d;
 
@@ -38,7 +38,7 @@ public final class ServerConfig {
         coyoteTime = SERVER.coyoteTime.get();
         stepHeightMultiplier = SERVER.stepHeightMultiplier.get();
         stepHeightSneakingMultiplier = SERVER.stepHeightSneakingMultiplier.get();
-        jumpHeightBoost = SERVER.jumpHeightBoost.get();
+        jumpPowerMultiplier = SERVER.jumpPowerMultiplier.get();
         movementSpeedMultiplier = SERVER.movementSpeedMultiplier.get();
         swimSpeedMultiplier = SERVER.swimSpeedMultiplier.get();
     }
@@ -48,7 +48,7 @@ public final class ServerConfig {
         public final ModConfigSpec.IntValue coyoteTime;
         public final ModConfigSpec.DoubleValue stepHeightMultiplier;
         public final ModConfigSpec.DoubleValue stepHeightSneakingMultiplier;
-        public final ModConfigSpec.DoubleValue jumpHeightBoost;
+        public final ModConfigSpec.DoubleValue jumpPowerMultiplier;
         public final ModConfigSpec.DoubleValue movementSpeedMultiplier;
         public final ModConfigSpec.DoubleValue swimSpeedMultiplier;
 
@@ -70,10 +70,10 @@ public final class ServerConfig {
                     .comment("Multiplier on the step height of every player while sneaking. It's highly recommended to keep this at 1.")
                     .translation("text." + MovementPlus.MOD_ID + ".config.stepHeightSneakingMultiplier")
                     .defineInRange("stepHeightSneakingMultiplier", 1.0d, 0d, 16d);
-            jumpHeightBoost = builder
-                    .comment("Additional base jump height in equivalent levels of the jump boost potion effect. Negative values possible.")
-                    .translation("text." + MovementPlus.MOD_ID + ".config.jumpHeightBoost")
-                    .defineInRange("jumpHeightBoost", 0.0d, -128d, 127d);
+            jumpPowerMultiplier = builder
+                    .comment("Multiplier on the jump power of every player. Fall damage is compensated for the gained jump height. 1 leaves the jump strength attribute untouched.")
+                    .translation("text." + MovementPlus.MOD_ID + ".config.jumpPowerMultiplier")
+                    .defineInRange("jumpPowerMultiplier", 1.0d, 0d, 16d);
             movementSpeedMultiplier = builder
                     .comment("Multiplier on the base walking speed of every player.")
                     .translation("text." + MovementPlus.MOD_ID + ".config.movementSpeedMultiplier")

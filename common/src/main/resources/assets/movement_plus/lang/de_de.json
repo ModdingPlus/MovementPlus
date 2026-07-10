@@ -9,7 +9,7 @@
   "text.movement_plus.config.coyoteTime": "Basis-Coyote-Time (Ticks)",
   "text.movement_plus.config.stepHeightMultiplier": "Stufenhöhen-Multiplikator",
   "text.movement_plus.config.stepHeightSneakingMultiplier": "Stufenhöhen-Multiplikator beim Schleichen",
-  "text.movement_plus.config.jumpHeightBoost": "Sprunghöhenbonus (Stufen)",
+  "text.movement_plus.config.jumpPowerMultiplier": "Sprungkraft-Multiplikator",
   "text.movement_plus.config.movementSpeedMultiplier": "Bewegungsgeschwindigkeits-Multiplikator",
   "text.movement_plus.config.swimSpeedMultiplier": "Schwimmgeschwindigkeits-Multiplikator"
 }

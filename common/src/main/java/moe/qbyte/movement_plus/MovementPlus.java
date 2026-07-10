@@ -29,6 +29,7 @@ public final class MovementPlus {
         MidairJumpHandler.init();
         StepHeightHandler.init();
         MovementSpeedHandler.init();
+        JumpHeightHandler.init();
 
         // Sync the server config values to each client on join; needed for client-side jump prediction.
         PlayerEvent.PLAYER_JOIN.register(ConfigSyncPayload::sendTo);
