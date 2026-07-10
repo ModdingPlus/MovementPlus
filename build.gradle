@@ -2,6 +2,7 @@ plugins {
     id 'dev.architectury.loom' version '1.11-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.gradleup.shadow' version '8.3.6' apply false
+    id 'me.modmuss50.mod-publish-plugin' version '2.1.1'
 }
 
 architectury {
@@ -85,5 +86,69 @@ subprojects {
             // The repositories here will be used for publishing your artifact, not for
             // retrieving dependencies.
         }
+    }
+}
+
+// Uploads the release jars to CurseForge and Modrinth: `./gradlew publishMods`.
+// Expects CURSEFORGE_TOKEN / MODRINTH_TOKEN in the environment. Set the gradle
+// property `publishDryRun` (-PpublishDryRun) to test without uploading.
+publishMods {
+    changelog = file('CHANGELOG.md').text
+    type = STABLE
+    dryRun = providers.gradleProperty('publishDryRun').isPresent()
+
+    def fabricJar = project(':fabric').tasks.named('remapJar').flatMap { it.archiveFile }
+    def neoforgeJar = project(':neoforge').tasks.named('remapJar').flatMap { it.archiveFile }
+
+    def cfOptions = curseforgeOptions {
+        // env var first (CI), then gradle property, e.g. from ~/.gradle/gradle.properties
+        accessToken = providers.environmentVariable('CURSEFORGE_TOKEN')
+                .orElse(providers.gradleProperty('CURSEFORGE_TOKEN'))
+        projectId = '579424'
+        minecraftVersions.add(minecraft_version)
+        javaVersions.add(JavaVersion.VERSION_21)
+        clientRequired = true
+        serverRequired = true
+        requires 'architectury-api'
+    }
+
+    def mrOptions = modrinthOptions {
+        accessToken = providers.environmentVariable('MODRINTH_TOKEN')
+                .orElse(providers.gradleProperty('MODRINTH_TOKEN'))
+        projectId = 'Zg4Gfb1a' // movement_plus
+        minecraftVersions.add(minecraft_version)
+        requires 'architectury-api'
+    }
+
+    curseforge('curseforgeFabric') {
+        from cfOptions
+        file = fabricJar
+        modLoaders.add('fabric')
+        displayName = "Movement Plus ${mod_version} [Fabric]"
+        requires 'fabric-api', 'forge-config-api-port'
+        optional 'modmenu'
+    }
+
+    curseforge('curseforgeNeoForge') {
+        from cfOptions
+        file = neoforgeJar
+        modLoaders.add('neoforge')
+        displayName = "Movement Plus ${mod_version} [NeoForge]"
+    }
+
+    modrinth('modrinthFabric') {
+        from mrOptions
+        file = fabricJar
+        modLoaders.add('fabric')
+        displayName = "Movement Plus ${mod_version} [Fabric]"
+        requires 'fabric-api', 'forge-config-api-port'
+        optional 'modmenu'
+    }
+
+    modrinth('modrinthNeoForge') {
+        from mrOptions
+        file = neoforgeJar
+        modLoaders.add('neoforge')
+        displayName = "Movement Plus ${mod_version} [NeoForge]"
     }
 }
