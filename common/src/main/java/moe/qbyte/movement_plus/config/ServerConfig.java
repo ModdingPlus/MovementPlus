@@ -24,8 +24,8 @@ public final class ServerConfig {
 
     public static int multiJumps = 0;
     public static int coyoteTime = 3;
-    public static double stepHeight = 0.6d;
-    public static double stepHeightSneaking = 0.6d;
+    public static double stepHeightMultiplier = 1d;
+    public static double stepHeightSneakingMultiplier = 1d;
     public static double jumpHeightBoost = 0d;
     public static double movementSpeedMultiplier = 1d;
     public static double swimSpeedMultiplier = 1d;
@@ -36,8 +36,8 @@ public final class ServerConfig {
     public static void cache() {
         multiJumps = SERVER.multiJumps.get();
         coyoteTime = SERVER.coyoteTime.get();
-        stepHeight = SERVER.stepHeight.get();
-        stepHeightSneaking = SERVER.stepHeightSneaking.get();
+        stepHeightMultiplier = SERVER.stepHeightMultiplier.get();
+        stepHeightSneakingMultiplier = SERVER.stepHeightSneakingMultiplier.get();
         jumpHeightBoost = SERVER.jumpHeightBoost.get();
         movementSpeedMultiplier = SERVER.movementSpeedMultiplier.get();
         swimSpeedMultiplier = SERVER.swimSpeedMultiplier.get();
@@ -46,8 +46,8 @@ public final class ServerConfig {
     public static class ServerConfigTemplate {
         public final ModConfigSpec.IntValue multiJumps;
         public final ModConfigSpec.IntValue coyoteTime;
-        public final ModConfigSpec.DoubleValue stepHeight;
-        public final ModConfigSpec.DoubleValue stepHeightSneaking;
+        public final ModConfigSpec.DoubleValue stepHeightMultiplier;
+        public final ModConfigSpec.DoubleValue stepHeightSneakingMultiplier;
         public final ModConfigSpec.DoubleValue jumpHeightBoost;
         public final ModConfigSpec.DoubleValue movementSpeedMultiplier;
         public final ModConfigSpec.DoubleValue swimSpeedMultiplier;
@@ -62,14 +62,14 @@ public final class ServerConfig {
                     .comment("The base coyote time every player has in ticks. This is summed with the duration of coyote time provided by equipment.")
                     .translation("text." + MovementPlus.MOD_ID + ".config.coyoteTime")
                     .defineInRange("coyoteTime", 3, 0, 65536);
-            stepHeight = builder
-                    .comment("The base step height every player has in blocks.")
-                    .translation("text." + MovementPlus.MOD_ID + ".config.stepHeight")
-                    .defineInRange("stepHeight", 0.6d, 0d, 8d);
-            stepHeightSneaking = builder
-                    .comment("The base step height every player has in blocks when sneaking. It's highly recommended to keep this at the default value.")
-                    .translation("text." + MovementPlus.MOD_ID + ".config.stepHeightSneaking")
-                    .defineInRange("stepHeightSneaking", 0.6d, 0d, 8d);
+            stepHeightMultiplier = builder
+                    .comment("Multiplier on the step height of every player. 1 leaves the step height attribute untouched.")
+                    .translation("text." + MovementPlus.MOD_ID + ".config.stepHeightMultiplier")
+                    .defineInRange("stepHeightMultiplier", 1.0d, 0d, 16d);
+            stepHeightSneakingMultiplier = builder
+                    .comment("Multiplier on the step height of every player while sneaking. It's highly recommended to keep this at 1.")
+                    .translation("text." + MovementPlus.MOD_ID + ".config.stepHeightSneakingMultiplier")
+                    .defineInRange("stepHeightSneakingMultiplier", 1.0d, 0d, 16d);
             jumpHeightBoost = builder
                     .comment("Additional base jump height in equivalent levels of the jump boost potion effect. Negative values possible.")
                     .translation("text." + MovementPlus.MOD_ID + ".config.jumpHeightBoost")

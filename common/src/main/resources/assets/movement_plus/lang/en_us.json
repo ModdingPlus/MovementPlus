@@ -7,8 +7,8 @@
   "movement_plus.configuration.general": "General",
   "text.movement_plus.config.multiJumps": "Base Midair Jumps",
   "text.movement_plus.config.coyoteTime": "Base Coyote Time (Ticks)",
-  "text.movement_plus.config.stepHeight": "Base Step Height (Blocks)",
-  "text.movement_plus.config.stepHeightSneaking": "Sneaking Step Height (Blocks)",
+  "text.movement_plus.config.stepHeightMultiplier": "Step Height Multiplier",
+  "text.movement_plus.config.stepHeightSneakingMultiplier": "Sneaking Step Height Multiplier",
   "text.movement_plus.config.jumpHeightBoost": "Jump Height Boost (Levels)",
   "text.movement_plus.config.movementSpeedMultiplier": "Movement Speed Multiplier",
   "text.movement_plus.config.swimSpeedMultiplier": "Swim Speed Multiplier"

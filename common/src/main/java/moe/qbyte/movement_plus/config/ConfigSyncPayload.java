@@ -13,8 +13,8 @@ import net.minecraft.server.level.ServerPlayer;
  * S2C payload carrying the server's gameplay config values. Sent on join and on config reload,
  * so the client can predict midair jumps with the same values the server validates with.
  */
-public record ConfigSyncPayload(int multiJumps, int coyoteTime, double stepHeight,
-                                double stepHeightSneaking, double jumpHeightBoost,
+public record ConfigSyncPayload(int multiJumps, int coyoteTime, double stepHeightMultiplier,
+                                double stepHeightSneakingMultiplier, double jumpHeightBoost,
                                 double movementSpeedMultiplier, double swimSpeedMultiplier)
         implements CustomPacketPayload {
 
@@ -25,8 +25,8 @@ public record ConfigSyncPayload(int multiJumps, int coyoteTime, double stepHeigh
             (buf, payload) -> {
                 buf.writeVarInt(payload.multiJumps);
                 buf.writeVarInt(payload.coyoteTime);
-                buf.writeDouble(payload.stepHeight);
-                buf.writeDouble(payload.stepHeightSneaking);
+                buf.writeDouble(payload.stepHeightMultiplier);
+                buf.writeDouble(payload.stepHeightSneakingMultiplier);
                 buf.writeDouble(payload.jumpHeightBoost);
                 buf.writeDouble(payload.movementSpeedMultiplier);
                 buf.writeDouble(payload.swimSpeedMultiplier);
@@ -37,7 +37,8 @@ public record ConfigSyncPayload(int multiJumps, int coyoteTime, double stepHeigh
 
     public static ConfigSyncPayload fromCurrentValues() {
         return new ConfigSyncPayload(ServerConfig.multiJumps, ServerConfig.coyoteTime,
-                ServerConfig.stepHeight, ServerConfig.stepHeightSneaking, ServerConfig.jumpHeightBoost,
+                ServerConfig.stepHeightMultiplier, ServerConfig.stepHeightSneakingMultiplier,
+                ServerConfig.jumpHeightBoost,
                 ServerConfig.movementSpeedMultiplier, ServerConfig.swimSpeedMultiplier);
     }
 
@@ -59,8 +60,8 @@ public record ConfigSyncPayload(int multiJumps, int coyoteTime, double stepHeigh
     public void apply() {
         ServerConfig.multiJumps = this.multiJumps;
         ServerConfig.coyoteTime = this.coyoteTime;
-        ServerConfig.stepHeight = this.stepHeight;
-        ServerConfig.stepHeightSneaking = this.stepHeightSneaking;
+        ServerConfig.stepHeightMultiplier = this.stepHeightMultiplier;
+        ServerConfig.stepHeightSneakingMultiplier = this.stepHeightSneakingMultiplier;
         ServerConfig.jumpHeightBoost = this.jumpHeightBoost;
         ServerConfig.movementSpeedMultiplier = this.movementSpeedMultiplier;
         ServerConfig.swimSpeedMultiplier = this.swimSpeedMultiplier;

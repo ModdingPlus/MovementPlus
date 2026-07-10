@@ -1,26 +1,26 @@
 package moe.qbyte.movement_plus.step_height;
 
 import dev.architectury.event.events.common.TickEvent;
+import moe.qbyte.movement_plus.MovementPlus;
+import moe.qbyte.movement_plus.common.AttributeMultipliers;
 import moe.qbyte.movement_plus.config.ServerConfig;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 /**
- * Applies the configured step height through vanilla's {@code generic.step_height} attribute
- * (new since 1.20.5; replaces the old per-tick {@code maxUpStep} field write).
+ * Applies the configured step height multiplier through a modifier on vanilla's
+ * {@code generic.step_height} attribute (new since 1.20.5; replaces the old per-tick
+ * {@code maxUpStep} field write from 1.19.x).
  */
 public final class StepHeightHandler {
+    private static final ResourceLocation MODIFIER_ID = MovementPlus.id("step_height_multiplier");
+
     private StepHeightHandler() {}
 
     public static void init() {
-        TickEvent.PLAYER_PRE.register(player -> {
-            AttributeInstance stepHeight = player.getAttribute(Attributes.STEP_HEIGHT);
-            if (stepHeight != null) {
-                // setBaseValue is a no-op (no sync) when the value is unchanged
-                stepHeight.setBaseValue(player.isCrouching()
-                        ? ServerConfig.stepHeightSneaking
-                        : ServerConfig.stepHeight);
-            }
-        });
+        TickEvent.PLAYER_PRE.register(player -> AttributeMultipliers.apply(
+                player, Attributes.STEP_HEIGHT, MODIFIER_ID,
+                player.isCrouching() ? ServerConfig.stepHeightSneakingMultiplier
+                                     : ServerConfig.stepHeightMultiplier));
     }
 }
