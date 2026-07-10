@@ -1,0 +1,15 @@
+{
+  "subtitles.movement_plus.midair_jump": "Luftsprung",
+  "attribute.name.player.movement_plus.multi_jumps": "Luftsprünge",
+  "attribute.name.player.movement_plus.coyote_time": "Coyote Time",
+  "attribute.name.player.movement_plus.swim_speed": "Schwimmgeschwindigkeit",
+  "movement_plus.configuration.title": "Movement-Plus-Konfiguration",
+  "movement_plus.configuration.general": "Allgemein",
+  "text.movement_plus.config.multiJumps": "Basis-Luftsprünge",
+  "text.movement_plus.config.coyoteTime": "Basis-Coyote-Time (Ticks)",
+  "text.movement_plus.config.stepHeight": "Basis-Stufenhöhe (Blöcke)",
+  "text.movement_plus.config.stepHeightSneaking": "Stufenhöhe beim Schleichen (Blöcke)",
+  "text.movement_plus.config.jumpHeightBoost": "Sprunghöhenbonus (Stufen)",
+  "text.movement_plus.config.movementSpeedMultiplier": "Bewegungsgeschwindigkeits-Multiplikator",
+  "text.movement_plus.config.swimSpeedMultiplier": "Schwimmgeschwindigkeits-Multiplikator"
+}

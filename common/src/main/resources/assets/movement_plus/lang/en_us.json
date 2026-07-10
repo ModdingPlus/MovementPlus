@@ -2,5 +2,14 @@
   "subtitles.movement_plus.midair_jump": "Midair Jump",
   "attribute.name.player.movement_plus.multi_jumps": "Midair Jumps",
   "attribute.name.player.movement_plus.coyote_time": "Coyote Time",
-  "attribute.name.player.movement_plus.swim_speed": "Swim Speed"
+  "attribute.name.player.movement_plus.swim_speed": "Swim Speed",
+  "movement_plus.configuration.title": "Movement Plus Configuration",
+  "movement_plus.configuration.general": "General",
+  "text.movement_plus.config.multiJumps": "Base Midair Jumps",
+  "text.movement_plus.config.coyoteTime": "Base Coyote Time (Ticks)",
+  "text.movement_plus.config.stepHeight": "Base Step Height (Blocks)",
+  "text.movement_plus.config.stepHeightSneaking": "Sneaking Step Height (Blocks)",
+  "text.movement_plus.config.jumpHeightBoost": "Jump Height Boost (Levels)",
+  "text.movement_plus.config.movementSpeedMultiplier": "Movement Speed Multiplier",
+  "text.movement_plus.config.swimSpeedMultiplier": "Swim Speed Multiplier"
 }
