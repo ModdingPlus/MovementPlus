@@ -28,3 +28,6 @@ mcmodsrepo
 
 # IDE launch configs; loom's vscode task must not be re-run (it generates broken direct launches)
 .vscode/
+
+# architectury dev runtime output
+.architectury-transformer/
