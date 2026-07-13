@@ -12,7 +12,8 @@ import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import java.util.function.Supplier;
 
 /**
- * Custom player attributes; attached to players in {@code PlayerMixin#createAttributes}.
+ * Custom player attributes; attached to players by the loader modules
+ * (EntityAttributeModificationEvent on NeoForge, FabricDefaultAttributeRegistry on Fabric).
  *
  * <p>The old {@code movement_plus:jump_height} attribute is gone: since 1.20.5 vanilla ships
  * {@code minecraft:generic.jump_strength} on all living entities, which fills the same role.

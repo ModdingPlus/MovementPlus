@@ -2,19 +2,33 @@ package moe.qbyte.movement_plus.midair_jump;
 
 import dev.architectury.event.events.common.TickEvent;
 import dev.architectury.networking.NetworkManager;
+import moe.qbyte.movement_plus.MovementPlus;
 import moe.qbyte.movement_plus.api.MidairJumpEvents;
+import moe.qbyte.movement_plus.common.AttributeMultipliers;
 import moe.qbyte.movement_plus.config.ServerConfig;
 import moe.qbyte.movement_plus.mixin.LivingEntityInvoker;
 import moe.qbyte.movement_plus.registry.ModAttributes;
 import moe.qbyte.movement_plus.registry.ModSounds;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 
 public final class MidairJumpHandler {
+    private static final ResourceLocation MULTI_JUMPS_CONFIG_ID = MovementPlus.id("multi_jumps_config");
+    private static final ResourceLocation COYOTE_TIME_CONFIG_ID = MovementPlus.id("coyote_time_config");
+
     private MidairJumpHandler() {}
 
     public static void init() {
+        // The config values act as the default attribute values, applied as flat
+        // modifiers so equipment and other mods stack on an untouched base.
+        TickEvent.PLAYER_PRE.register(player -> {
+            AttributeMultipliers.applyFlat(player, ModAttributes.MULTI_JUMPS.holder(),
+                    MULTI_JUMPS_CONFIG_ID, ServerConfig.multiJumps);
+            AttributeMultipliers.applyFlat(player, ModAttributes.COYOTE_TIME.holder(),
+                    COYOTE_TIME_CONFIG_ID, ServerConfig.coyoteTime);
+        });
         TickEvent.PLAYER_POST.register(MidairJumpHandler::playerTick);
     }
 
@@ -65,8 +79,7 @@ public final class MidairJumpHandler {
         MidairJumpState state = MidairJumpState.of(player);
 
         if (player.getDeltaMovement().y < 0 && !state.movement_plus$hasJumped()) {
-            int coyoteTime = (int) Math.floor(
-                    player.getAttributeValue(ModAttributes.COYOTE_TIME.holder()) + ServerConfig.coyoteTime);
+            int coyoteTime = (int) Math.floor(player.getAttributeValue(ModAttributes.COYOTE_TIME.holder()));
 
             if (coyoteTime > 0 && state.movement_plus$getTimeOffGround() <= coyoteTime) {
                 if (!MidairJumpEvents.COYOTE_TIME_PRE.invoker().beforeJump(player).isFalse()) {
@@ -77,8 +90,7 @@ public final class MidairJumpHandler {
             }
         }
 
-        int multiJumps = (int) Math.floor(
-                player.getAttributeValue(ModAttributes.MULTI_JUMPS.holder()) + ServerConfig.multiJumps);
+        int multiJumps = (int) Math.floor(player.getAttributeValue(ModAttributes.MULTI_JUMPS.holder()));
         int usedJumps = state.movement_plus$getUsedJumps();
 
         if (multiJumps > 0 && usedJumps < multiJumps) {
