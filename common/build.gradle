@@ -15,3 +15,20 @@ dependencies {
     // NeoForge itself and by Forge Config API Port on Fabric.
     modApi "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:$rootProject.forge_config_api_port_version"
 }
+
+// The public surface other mods compile against: the api package (events) and
+// the registry package (attributes, sounds). Classes are the unremapped dev
+// output, which is the compile namespace of every 1.21 dev environment, so
+// consumers use a plain compileOnly on the api classifier.
+def apiJar = tasks.register('apiJar', Jar) {
+    from sourceSets.main.output
+    include 'moe/qbyte/movement_plus/api/**'
+    include 'moe/qbyte/movement_plus/registry/**'
+    archiveClassifier = 'api'
+}
+
+assemble.dependsOn apiJar
+
+publishing.publications.named('mavenJava', MavenPublication) {
+    artifact apiJar
+}

@@ -1,3 +1,13 @@
+# 2.1.0
+
+- The config values for multi jumps and coyote time are now applied as
+  attribute modifiers (defaults on `movement_plus:multi_jumps` and
+  `movement_plus:coyote_time`), so equipment and other mods stack cleanly
+  with the configured base.
+- An api jar (events + attributes) is now attached to the Modrinth release
+  and resolvable as `maven.modrinth:movement_plus:2.1.0+neoforge:api`.
+- Minecraft version ranges are declared as 1.21.1-only.
+
 # 2.0.0
 
 Full rewrite for Minecraft 1.21.1 as a multiloader mod (NeoForge + Fabric) on Architectury.
