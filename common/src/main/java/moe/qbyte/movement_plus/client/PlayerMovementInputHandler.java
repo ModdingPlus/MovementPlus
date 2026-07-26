@@ -30,7 +30,7 @@ public final class PlayerMovementInputHandler {
                 return;
             }
 
-            boolean jumping = player.input.jumping;
+            boolean jumping = player.input.keyPresses.jump();
             if (!wasJumping && jumping && !hadFooting) {
                 MidairJumpHandler.attemptPlayerJump(player, true);
             }

@@ -6,17 +6,16 @@ import moe.qbyte.movement_plus.MovementPlus;
 import moe.qbyte.movement_plus.api.MidairJumpEvents;
 import moe.qbyte.movement_plus.common.AttributeMultipliers;
 import moe.qbyte.movement_plus.config.ServerConfig;
-import moe.qbyte.movement_plus.mixin.LivingEntityInvoker;
 import moe.qbyte.movement_plus.registry.ModAttributes;
 import moe.qbyte.movement_plus.registry.ModSounds;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 
 public final class MidairJumpHandler {
-    private static final ResourceLocation MULTI_JUMPS_CONFIG_ID = MovementPlus.id("multi_jumps_config");
-    private static final ResourceLocation COYOTE_TIME_CONFIG_ID = MovementPlus.id("coyote_time_config");
+    private static final Identifier MULTI_JUMPS_CONFIG_ID = MovementPlus.id("multi_jumps_config");
+    private static final Identifier COYOTE_TIME_CONFIG_ID = MovementPlus.id("coyote_time_config");
 
     private MidairJumpHandler() {}
 
@@ -114,7 +113,7 @@ public final class MidairJumpHandler {
 
     private static void performJump(Player player, boolean clientSide) {
         if (clientSide) NetworkManager.sendToServer(MidairJumpPayload.INSTANCE);
-        ((LivingEntityInvoker) player).movement_plus$jumpFromGround();
+        player.jumpFromGround();
     }
 
     private static void playMultiJumpEffects(Player player) {

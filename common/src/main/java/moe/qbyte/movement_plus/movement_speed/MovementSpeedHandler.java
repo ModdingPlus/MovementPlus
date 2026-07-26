@@ -4,7 +4,7 @@ import dev.architectury.event.events.common.TickEvent;
 import moe.qbyte.movement_plus.MovementPlus;
 import moe.qbyte.movement_plus.common.AttributeMultipliers;
 import moe.qbyte.movement_plus.config.ServerConfig;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 /**
@@ -12,7 +12,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
  * movement speed attribute; multiplies after sprinting/potion/equipment modifiers.
  */
 public final class MovementSpeedHandler {
-    private static final ResourceLocation MODIFIER_ID = MovementPlus.id("movement_speed_multiplier");
+    private static final Identifier MODIFIER_ID = MovementPlus.id("movement_speed_multiplier");
 
     private MovementSpeedHandler() {}
 

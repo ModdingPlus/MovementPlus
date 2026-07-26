@@ -1,6 +1,6 @@
 package moe.qbyte.movement_plus.common;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -17,18 +17,18 @@ public final class AttributeMultipliers {
     private AttributeMultipliers() {}
 
     public static void apply(LivingEntity entity, Holder<Attribute> attribute,
-                             ResourceLocation modifierId, double multiplier) {
+                             Identifier modifierId, double multiplier) {
         set(entity, attribute, modifierId, multiplier - 1.0d, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     }
 
     /** Flat bonus variant with the same lifecycle: an amount of 0 removes the modifier. */
     public static void applyFlat(LivingEntity entity, Holder<Attribute> attribute,
-                                 ResourceLocation modifierId, double amount) {
+                                 Identifier modifierId, double amount) {
         set(entity, attribute, modifierId, amount, AttributeModifier.Operation.ADD_VALUE);
     }
 
     private static void set(LivingEntity entity, Holder<Attribute> attribute,
-                            ResourceLocation modifierId, double amount, AttributeModifier.Operation operation) {
+                            Identifier modifierId, double amount, AttributeModifier.Operation operation) {
         AttributeInstance instance = entity.getAttribute(attribute);
         if (instance == null) return;
 

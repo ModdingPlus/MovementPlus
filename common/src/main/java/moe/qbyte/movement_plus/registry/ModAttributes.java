@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  * (EntityAttributeModificationEvent on NeoForge, FabricDefaultAttributeRegistry on Fabric).
  *
  * <p>The old {@code movement_plus:jump_height} attribute is gone: since 1.20.5 vanilla ships
- * {@code minecraft:generic.jump_strength} on all living entities, which fills the same role.
+ * {@code minecraft:jump_strength} on all living entities, which fills the same role.
  */
 public final class ModAttributes {
     private static final DeferredRegister<Attribute> ATTRIBUTES =

@@ -18,15 +18,15 @@ public abstract class LivingEntityMixin {
     }
 
     @ModifyVariable(method = "causeFallDamage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
-    private float movement_plus$modifyFallDistance(float distance) {
+    private double movement_plus$modifyFallDistance(double distance) {
         return EntityHooks.modifyFallDistance((LivingEntity) (Object) this, distance);
     }
 
-    // ordinal 0 is the water branch of travel(); ordinal 1 would be lava
-    @ModifyArg(method = "travel",
+    // travelInWater holds the water branch since the 1.21.2 travel() split
+    // (lava lives in its own travelInLava); its only moveRelative call is this one
+    @ModifyArg(method = "travelInWater",
             at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/LivingEntity;moveRelative(FLnet/minecraft/world/phys/Vec3;)V",
-                    ordinal = 0),
+                    target = "Lnet/minecraft/world/entity/LivingEntity;moveRelative(FLnet/minecraft/world/phys/Vec3;)V"),
             index = 0)
     private float movement_plus$scaleSwimSpeed(float amount) {
         return EntityHooks.scaleSwimSpeed((LivingEntity) (Object) this, amount);

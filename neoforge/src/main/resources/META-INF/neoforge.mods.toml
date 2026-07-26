@@ -17,21 +17,21 @@ logoFile = "assets/movement_plus/logo.png"
 [[dependencies.movement_plus]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.1,)"
+versionRange = "[21.11,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.movement_plus]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.1,1.21.2)"
+versionRange = "[1.21.11,1.21.12)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.movement_plus]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.8,)"
+versionRange = "[19.0.1,)"
 ordering = "AFTER"
 side = "BOTH"
 

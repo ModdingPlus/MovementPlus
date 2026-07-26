@@ -4,16 +4,16 @@ import dev.architectury.event.events.common.TickEvent;
 import moe.qbyte.movement_plus.MovementPlus;
 import moe.qbyte.movement_plus.common.AttributeMultipliers;
 import moe.qbyte.movement_plus.config.ServerConfig;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 /**
  * Applies the configured step height multiplier through a modifier on vanilla's
- * {@code generic.step_height} attribute (new since 1.20.5; replaces the old per-tick
+ * {@code step_height} attribute (new since 1.20.5; replaces the old per-tick
  * {@code maxUpStep} field write from 1.19.x).
  */
 public final class StepHeightHandler {
-    private static final ResourceLocation MODIFIER_ID = MovementPlus.id("step_height_multiplier");
+    private static final Identifier MODIFIER_ID = MovementPlus.id("step_height_multiplier");
 
     private StepHeightHandler() {}
 

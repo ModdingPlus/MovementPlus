@@ -4,18 +4,18 @@ import dev.architectury.event.events.common.TickEvent;
 import moe.qbyte.movement_plus.MovementPlus;
 import moe.qbyte.movement_plus.common.AttributeMultipliers;
 import moe.qbyte.movement_plus.config.ServerConfig;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 /**
  * Applies the configured jump power multiplier through a modifier on vanilla's
- * {@code generic.jump_strength} attribute (replaces the 1.19.x jump velocity hack),
- * with the gained apex height compensated on {@code generic.safe_fall_distance}
+ * {@code jump_strength} attribute (replaces the 1.19.x jump velocity hack),
+ * with the gained apex height compensated on {@code safe_fall_distance}
  * the same way the jump boost potion effect does it.
  */
 public final class JumpHeightHandler {
-    private static final ResourceLocation POWER_MODIFIER_ID = MovementPlus.id("jump_power_multiplier");
-    private static final ResourceLocation SAFE_FALL_MODIFIER_ID = MovementPlus.id("jump_power_safe_fall_bonus");
+    private static final Identifier POWER_MODIFIER_ID = MovementPlus.id("jump_power_multiplier");
+    private static final Identifier SAFE_FALL_MODIFIER_ID = MovementPlus.id("jump_power_safe_fall_bonus");
 
     /** Apex height of an unmodified vanilla jump (power 0.42) in blocks. */
     private static final double VANILLA_JUMP_HEIGHT = 1.25d;

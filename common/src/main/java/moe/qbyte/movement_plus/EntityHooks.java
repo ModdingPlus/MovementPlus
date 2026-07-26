@@ -19,7 +19,7 @@ public final class EntityHooks {
     }
 
     /**
-     * Scales the water-movement acceleration in {@code travel} for players;
+     * Scales the water-movement acceleration in {@code travelInWater} for players;
      * cross-loader replacement for NeoForge's {@code swim_speed} attribute.
      */
     public static float scaleSwimSpeed(LivingEntity entity, float amount) {
@@ -34,12 +34,12 @@ public final class EntityHooks {
      * The jump power compensation lives on the safe fall distance attribute; this only
      * covers midair jumps used since the last landing, which soften the fall like in 1.19.x.
      */
-    public static float modifyFallDistance(LivingEntity entity, float distance) {
+    public static double modifyFallDistance(LivingEntity entity, double distance) {
         if (!(entity instanceof Player player)) return distance;
 
         if (MidairJumpState.of(player).movement_plus$getUsedJumps() > 0) {
             double extraJumpHeight = JumpHeightHandler.extraJumpHeight(ServerConfig.jumpPowerMultiplier);
-            distance = (float) Math.max(0d, distance - extraJumpHeight / 1.5d - 1d);
+            distance = Math.max(0d, distance - extraJumpHeight / 1.5d - 1d);
         }
         return distance;
     }

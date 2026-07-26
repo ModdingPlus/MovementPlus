@@ -1,6 +1,6 @@
 package moe.qbyte.movement_plus.fabric.client;
 
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
+import fuzs.forgeconfigapiport.fabric.api.v5.client.ConfigScreenFactoryRegistry;
 import moe.qbyte.movement_plus.MovementPlus;
 import moe.qbyte.movement_plus.MovementPlusClient;
 import net.fabricmc.api.ClientModInitializer;
