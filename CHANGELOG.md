@@ -1,3 +1,7 @@
+# 2.2.0
+
+- Port the mod to 1.21.11 with next to no changes required
+
 # 2.1.0
 
 - The config values for multi jumps and coyote time are now applied as
