@@ -1,3 +1,10 @@
+# 2.2.1
+
+- Port the mod to Minecraft 26.1 (Java 25); no gameplay changes - in fact no code changes even
+- The Fabric jar supports all hotfixes of the drop (26.1, 26.1.1, and 26.1.2)
+- The NeoForge jar requires NeoForge 26.1.2 because none of the available Architectury
+  builds are compatible with the Neoforge versions available on 26.1 and 26.1.1
+
 # 2.2.0
 
 - Port the mod to 1.21.11 with next to no changes required
