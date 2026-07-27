@@ -17,21 +17,23 @@ logoFile = "assets/movement_plus/logo.png"
 [[dependencies.movement_plus]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.11,)"
+# 26.1.2 floor: NeoForge never stabilized on the earlier hotfixes and
+# Architectury's NeoForge jar needs >=26.1.2.21-beta anyway
+versionRange = "[26.1.2,26.2)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.movement_plus]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.11,1.21.12)"
+versionRange = "[26.1,26.2)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.movement_plus]]
 modId = "architectury"
 type = "required"
-versionRange = "[19.0.1,)"
+versionRange = "[20.0.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
