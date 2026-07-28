@@ -5,7 +5,7 @@ import moe.qbyte.movement_plus.MovementPlusClient;
 import moe.qbyte.movement_plus.config.ConfigSyncPayload;
 import moe.qbyte.movement_plus.config.ServerConfig;
 import moe.qbyte.movement_plus.registry.ModAttributes;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -32,9 +32,9 @@ public final class MovementPlusNeoForge {
     }
 
     private void onEntityAttributeModification(EntityAttributeModificationEvent event) {
-        event.add(EntityType.PLAYER, ModAttributes.MULTI_JUMPS.holder());
-        event.add(EntityType.PLAYER, ModAttributes.COYOTE_TIME.holder());
-        event.add(EntityType.PLAYER, ModAttributes.SWIM_SPEED.holder());
+        event.add(EntityTypes.PLAYER, ModAttributes.MULTI_JUMPS.holder());
+        event.add(EntityTypes.PLAYER, ModAttributes.COYOTE_TIME.holder());
+        event.add(EntityTypes.PLAYER, ModAttributes.SWIM_SPEED.holder());
     }
 
     private void onConfigLoading(ModConfigEvent.Loading event) {
