@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "moe.qbyte.movement_plus.fabric.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "AttributeSupplierAccessor",
+    "PlayerAttributesMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
