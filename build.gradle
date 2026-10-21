@@ -117,14 +117,12 @@ publishMods {
         javaVersions.add(JavaVersion.VERSION_25)
         clientRequired = true
         serverRequired = true
-        requires 'architectury-api'
     }
 
     def mrOptions = modrinthOptions {
         accessToken = providers.environmentVariable('MODRINTH_TOKEN')
                 .orElse(providers.gradleProperty('MODRINTH_TOKEN'))
         projectId = 'Zg4Gfb1a' // movement_plus
-        requires 'architectury-api'
     }
 
     curseforge('curseforgeFabric') {
@@ -133,7 +131,7 @@ publishMods {
         file = fabricJar
         modLoaders.add('fabric')
         displayName = "Movement Plus ${mod_version} [Fabric]"
-        requires 'fabric-api', 'forge-config-api-port'
+        requires 'architectury-api', 'fabric-api', 'forge-config-api-port'
         optional 'modmenu'
     }
 
@@ -143,6 +141,7 @@ publishMods {
         file = neoforgeJar
         modLoaders.add('neoforge')
         displayName = "Movement Plus ${mod_version} [NeoForge]"
+        requires 'architectury-api'
     }
 
     modrinth('modrinthFabric') {
@@ -154,7 +153,7 @@ publishMods {
         // coordinates (maven.modrinth:movement_plus:<version>+<loader>)
         version = "${mod_version}+fabric"
         displayName = "Movement Plus ${mod_version} [Fabric]"
-        requires 'fabric-api', 'forge-config-api-port'
+        requires 'architectury-api', 'fabric-api', 'forge-config-api-port'
         optional 'modmenu'
     }
 
@@ -165,6 +164,7 @@ publishMods {
         modLoaders.add('neoforge')
         version = "${mod_version}+neoforge"
         displayName = "Movement Plus ${mod_version} [NeoForge]"
+        requires 'architectury-api'
         // the api jar rides along; the Modrinth maven matches additional files
         // by exact name, so maven.modrinth:movement_plus:<version>+neoforge:api
         // requires the file to be named <slug>-<version>+neoforge-api.jar

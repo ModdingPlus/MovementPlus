@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Unique;
 
 /**
  * Holds the transient midair jump state. The custom attributes are attached per loader:
- * via {@code FabricDefaultAttributeRegistry} on Fabric and
+ * via {@code FabricDefaultAttributeRegistry.MODIFY} on Fabric and
  * {@code EntityAttributeModificationEvent} on NeoForge, since default attribute suppliers
  * may be built before mod init on Fabric (dev-time {@code Bootstrap.validate()}).
  */

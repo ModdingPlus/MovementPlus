@@ -9,7 +9,6 @@ import moe.qbyte.movement_plus.registry.ModAttributes;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.fml.config.ModConfig;
 
 public final class MovementPlusFabric implements ModInitializer {
@@ -30,11 +29,9 @@ public final class MovementPlusFabric implements ModInitializer {
 
         MovementPlus.init();
 
-        // Replaces the player's default attribute supplier with one that includes ours;
-        // must run after MovementPlus.init() has registered the attributes.
-        FabricDefaultAttributeRegistry.register(EntityType.PLAYER, Player.createAttributes()
-                .add(ModAttributes.MULTI_JUMPS.holder())
-                .add(ModAttributes.COYOTE_TIME.holder())
-                .add(ModAttributes.SWIM_SPEED.holder()));
+        // Extends the player's default supplier instead of replacing it, so attributes other
+        // mods add survive; fires at registry freeze, after every mod has initialized.
+        FabricDefaultAttributeRegistry.MODIFY.register(context -> context.modify(EntityType.PLAYER,
+                (type, builder) -> ModAttributes.all().forEach(entry -> builder.add(entry.holder()))));
     }
 }
