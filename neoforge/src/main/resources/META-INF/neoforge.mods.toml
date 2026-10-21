@@ -7,24 +7,28 @@ license = "Unlicense"
 modId = "movement_plus"
 version = "${version}"
 displayName = "Movement Plus"
-displayURL = "https://www.curseforge.com/minecraft/mc-mods/movement_plus"
+displayURL = "https://modrinth.com/mod/movement_plus"
 authors = "Qb"
 description = '''
 A mod that allows for configurable movement such as midair jumps.
 '''
+# logoFile is what NeoForge 26.2 reads; 26.3 prefers bannerFile/iconFile and only
+# warns about logoFile when both are missing
 logoFile = "assets/movement_plus/logo.png"
+bannerFile = "assets/movement_plus/logo.png"
+iconFile = "assets/movement_plus/icon.png"
 
 [[dependencies.movement_plus]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.2,)"
+versionRange = "[26.2,26.4)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.movement_plus]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.2,)"
+versionRange = "[26.2,26.4)"
 ordering = "NONE"
 side = "BOTH"
 

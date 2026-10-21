@@ -8,7 +8,7 @@
     "Qb"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/movement_plus",
+    "homepage": "https://modrinth.com/mod/movement_plus",
     "sources": "https://github.com/ModdingPlus/MovementPlus",
     "issues": "https://github.com/ModdingPlus/MovementPlus/issues"
   },
@@ -28,10 +28,10 @@
   ],
   "depends": {
     "fabricloader": ">=0.19.3",
-    "minecraft": ">=26.2",
+    "minecraft": ">=26.2 <26.4",
     "java": ">=25",
     "architectury": ">=21.0.0",
-    "fabric-api": "*",
+    "fabric-api": ">=0.154.0",
     "forgeconfigapiport": ">=21.1.0"
   }
 }

@@ -1,43 +1,10 @@
-# 2.2.1
+- Fix an incompatibility on Fabric with mods that also add player attributes (e.g. Tiered):
+  the player's default attributes are now extended through Fabric API's attribute modification
+  event instead of being replaced
+- The Fabric jar now requires Fabric API 0.154.0 or newer
+- Minecraft 26.3 is now supported as well; the same jars run on 26.2 and 26.3
+- Notes for NeoForge + Minecraft 26.3 only:
+  - movement_plus-server.toml is now movement_plus-synced.toml
+    - files are compatible and only have to be renamed
+    - this move is the result of a rename happening in NeoForge
 
-- Port the mod to Minecraft 26.1 (Java 25); no gameplay changes - in fact no code changes even
-- The Fabric jar supports all hotfixes of the drop (26.1, 26.1.1, and 26.1.2)
-- The NeoForge jar requires NeoForge 26.1.2 because none of the available Architectury
-  builds are compatible with the Neoforge versions available on 26.1 and 26.1.1
-
-# 2.2.0
-
-- Port the mod to 1.21.11 with next to no changes required
-
-# 2.1.0
-
-- The config values for multi jumps and coyote time are now applied as
-  attribute modifiers (defaults on `movement_plus:multi_jumps` and
-  `movement_plus:coyote_time`), so equipment and other mods stack cleanly
-  with the configured base.
-- An api jar (events + attributes) is now attached to the Modrinth release
-  and resolvable as `maven.modrinth:movement_plus:2.1.0+neoforge:api`.
-- Minecraft version ranges are declared as 1.21.1-only.
-
-# 2.0.0
-
-Full rewrite for Minecraft 1.21.1 as a multiloader mod (NeoForge + Fabric) on Architectury.
-
-## Added
-
-- Fabric support (requires Fabric API, Architectury API, and Forge Config API Port)
-- NeoForge support (requires Architectury API); LexForge is no longer supported
-- Movement speed multiplier option
-- Swim speed multiplier option and a `movement_plus:swim_speed` player attribute for equipment/mods to hook into
-- In-game config screen (native on NeoForge; via Mod Menu on Fabric)
-- German translations
-
-## Changed
-
-- All gameplay options are now multipliers applied as attribute modifiers, so they compose with other mods instead of overwriting attribute values; a multiplier of 1 leaves the attribute completely untouched
-  - `stepHeight`/`stepHeightSneaking` are replaced by `stepHeightMultiplier`/`stepHeightSneakingMultiplier`
-  - `jumpHeightBoost` (potion levels) is replaced by `jumpPowerMultiplier`; fall damage compensation now uses the vanilla safe fall distance attribute
-- The custom `jump_height` attribute has been removed in favor of vanilla's `generic.jump_strength` (exists since 1.20.5); the jump power mixin is gone
-- Server config values now sync to clients through a dedicated packet, keeping client-side jump prediction accurate on any server
-- The mod API has been slimmed down to the midair jump events (`MidairJumpEvents`), now implemented as Architectury events; the input event API and attribute provider API have been removed
-- Config file moved from `world/serverconfig/` to `config/` (NeoForge convention since 1.20.5)

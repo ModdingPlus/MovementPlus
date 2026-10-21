@@ -16,19 +16,37 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 
+import java.util.Arrays;
+
 @Mod(MovementPlus.MOD_ID)
 public final class MovementPlusNeoForge {
     private final ModContainer container;
 
     public MovementPlusNeoForge(IEventBus modBus, ModContainer container) {
         this.container = container;
-        container.registerConfig(ModConfig.Type.SERVER, ServerConfig.SERVER_SPEC);
+        container.registerConfig(syncedConfigType(), ServerConfig.SERVER_SPEC);
         modBus.addListener(this::onConfigLoading);
         modBus.addListener(this::onConfigReloading);
         modBus.addListener(this::onEntityAttributeModification);
         modBus.addListener(this::onClientSetup);
 
         MovementPlus.init();
+    }
+
+    /**
+     * NeoForge 26.3 renamed {@code ModConfig.Type.SERVER} to {@code SYNCED};
+     * looking the constant up by name keeps one jar loadable on both 26.2 and 26.3.
+     * 
+     * As soon as 26.2 support is dropped this can be savely removed and just be
+     * replaced with ModConfig.Type.SYNCED
+     */
+    private static ModConfig.Type syncedConfigType() {
+        for (ModConfig.Type type : ModConfig.Type.values()) {
+            if (type.name().equals("SYNCED") || type.name().equals("SERVER")) {
+                return type;
+            }
+        }
+        throw new IllegalStateException("No synced config type in " + Arrays.toString(ModConfig.Type.values()));
     }
 
     private void onEntityAttributeModification(EntityAttributeModificationEvent event) {
