@@ -9,11 +9,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 /**
  * Custom player attributes; attached to players by the loader modules
- * (EntityAttributeModificationEvent on NeoForge, FabricDefaultAttributeRegistry on Fabric).
+ * (EntityAttributeModificationEvent on NeoForge, a Player.createAttributes() mixin on Fabric).
  *
  * <p>The old {@code movement_plus:jump_height} attribute is gone: since 1.20.5 vanilla ships
  * {@code minecraft:jump_strength} on all living entities, which fills the same role.
@@ -30,6 +31,10 @@ public final class ModAttributes {
             () -> new RangedAttribute("attribute.name.player.movement_plus.swim_speed", 1d, 0d, 1024d).setSyncable(true));
 
     private ModAttributes() {}
+
+    public static List<Entry> all() {
+        return List.of(MULTI_JUMPS, COYOTE_TIME, SWIM_SPEED);
+    }
 
     private static Entry register(String name, Supplier<Attribute> supplier) {
         return new Entry(ATTRIBUTES.register(name, supplier));

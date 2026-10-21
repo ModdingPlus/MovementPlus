@@ -5,11 +5,13 @@ import fuzs.forgeconfigapiport.fabric.api.v5.ModConfigEvents;
 import moe.qbyte.movement_plus.MovementPlus;
 import moe.qbyte.movement_plus.config.ConfigSyncPayload;
 import moe.qbyte.movement_plus.config.ServerConfig;
+import moe.qbyte.movement_plus.fabric.mixin.AttributeSupplierAccessor;
 import moe.qbyte.movement_plus.registry.ModAttributes;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.neoforged.fml.config.ModConfig;
 
 public final class MovementPlusFabric implements ModInitializer {
@@ -30,11 +32,15 @@ public final class MovementPlusFabric implements ModInitializer {
 
         MovementPlus.init();
 
-        // Replaces the player's default attribute supplier with one that includes ours;
-        // must run after MovementPlus.init() has registered the attributes.
-        FabricDefaultAttributeRegistry.register(EntityType.PLAYER, Player.createAttributes()
-                .add(ModAttributes.MULTI_JUMPS.holder())
-                .add(ModAttributes.COYOTE_TIME.holder())
-                .add(ModAttributes.SWIM_SPEED.holder()));
+        // Extends the player's current default supplier rather than replacing it, keeping
+        // attributes mods initialized before us registered. Mods initialized after us that
+        // build from Player.createAttributes() get ours through PlayerAttributesMixin.
+        AttributeSupplier.Builder builder = AttributeSupplier.builder();
+        ((AttributeSupplierAccessor) DefaultAttributes.getSupplier(EntityType.PLAYER)).movement_plus$getInstances()
+                .forEach((attribute, instance) -> builder.add(attribute, instance.getBaseValue()));
+        for (ModAttributes.Entry entry : ModAttributes.all()) {
+            builder.add(entry.holder());
+        }
+        FabricDefaultAttributeRegistry.register(EntityType.PLAYER, builder);
     }
 }
